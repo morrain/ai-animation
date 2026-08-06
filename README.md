@@ -1,6 +1,43 @@
+<div align="center">
+
 # 🎬 AI 科普动画 Agent Skill (`ai-animation`)
 
-`ai-animation` 是一个标准的 **Agent Skill** 框架与可扩展工具链，旨在分阶段将用户的**想法、问题、文章或参考资料**，自动化或交互式地改写并制作成包含**专业口播语音、动态画面/矢量动画、高亮精准字幕与背景音乐**的完整科普动画视频。
+**解耦架构 • 5 阶段流水线 • 人工门控阻断 • 状态冰封 • 双引擎极速合轨**
+
+将**想法、问题、文章或参考资料**改写并制作成包含**专业口播语音、动态画面动画、高亮字幕与背景音乐**的完整科普视频。
+
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![FFmpeg](https://img.shields.io/badge/FFmpeg-Required-green.svg)](https://ffmpeg.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Skill Spec](https://img.shields.io/badge/Agent%20Skill-Compliant-purple.svg)](#)
+
+</div>
+
+---
+
+## 🍿 成片效果展示 (Showcase)
+
+### 🎥 示例项目：《天空为什么是蓝色的？》
+
+采用 **Vox 纸拼贴风格 (vox)** 制作的科普短动画成片展示：
+
+<div align="center">
+
+<video src="./why-is-the-sky-blue/output/final.mp4" poster="./why-is-the-sky-blue/02-visual/contact_sheet.jpg" controls width="100%" style="max-width: 800px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+  您的浏览器不支持在线播放 MP4 视频。
+</video>
+
+<p>
+  🎬 <a href="./why-is-the-sky-blue/output/final.mp4"><b>点击直接播放 / 下载 final.mp4 视频成片 (6.2MB)</b></a>
+</p>
+
+</div>
+
+#### 📸 视觉分镜面板 (Contact Sheet Preview)
+
+以下为 Phase 2 生成的 **全镜头首尾关键帧拼图**，用于门控审查画面一致性与视觉构成：
+
+![Contact Sheet Preview](./why-is-the-sky-blue/02-visual/contact_sheet.jpg)
 
 ---
 
@@ -8,13 +45,15 @@
 
 工程采用 **5 阶段解耦流水线 (5-Stage Modular Pipeline)** 架构。核心设计哲学为：**中间产物透明持久化，图片、视频、音频、字幕与风格基线完全独立。**
 
-- 🧱 **分层独立持久化**：编导、视觉、运动、声音、合成 5 个阶段均将结果保存为结构化 JSON 及无损媒体资产。
-- 📦 **主题独立目录隔离 (Topic Isolation)**：每个视频项目采用英文小写 Kebab-case Slug（如 `why-is-the-sky-blue`）创建独立工作区，杜绝文件散落。
-- 🧊 **状态冰封快照 (State Freezing Protocol)**：初始化项目时将全局风格基因、色板 HEX、字体链与实测语速快照落盘至 `<topic_slug>/state/`，杜绝全局变动破坏历史项目。
-- 🛑 **Human-Gated 逐级门控与硬阻断**：编导脚本、首镜静帧、试听音频与无声动效试看均支持 SubAgent 盲审与人工确认门控，待用户确认满意后再全量渲染。
-- 🔌 **声明式 Provider 解耦**：生图与生视频大模型统一抽象为硬契约抽象类（`BaseImageProvider`, `BaseVideoProvider`），支持通过 JSON 声明式配置文件添加或切换第三方 API。
-- 🔄 **原子级增量更新**：换音色、调台词、更换大模型或重做某一特定分镜（Shot），无需将整条视频从头重新生成。
-- 🎞️ **双渲染引擎路由**：支持 FFmpeg 极速 WAV 主时钟合轨与 HyperFrames (Node.js/React) 声明式 Web 动效渲染双引擎平滑降级切换。
+| 核心特性 | 说明 |
+| :--- | :--- |
+| 🧱 **分层独立持久化** | 编导、视觉、运动、声音、合成 5 个阶段均将中间结果保存为结构化 JSON 及无损媒体资产 |
+| 📦 **主题独立目录隔离** | 每个视频项目采用英文 Kebab-case Slug（如 `why-is-the-sky-blue`）创建独立工作区，杜绝文件散落 |
+| 🧊 **状态冰封快照** | 初始化项目时将风格基因、色板 HEX、字体链与实测语速快照落盘至 `<topic_slug>/state/`，杜绝历史项目破坏 |
+| 🛑 **Human-Gated 逐级门控** | 编导脚本、首镜静帧、试听音频与无声动效试看均支持 SubAgent 盲审与人工确认门控，满意后再全量渲染 |
+| 🔌 **声明式 Provider 解耦** | 生图与生视频大模型统一抽象为硬契约抽象类（`BaseImageProvider`, `BaseVideoProvider`），支持通过 JSON 配置添加或切换 API |
+| 🔄 **原子级增量更新** | 换音色、调台词、更换大模型或重做某一特定分镜（Shot），无需将整条视频从头重新生成 |
+| 🎞️ **双渲染引擎路由** | 支持 FFmpeg 极速 WAV 主时钟合轨与 HyperFrames (Node.js/React) 声明式 Web 动效渲染双引擎平滑降级切换 |
 
 ---
 
@@ -51,6 +90,7 @@
 │   └── storyboard.json             # 核心观点、分镜台词、中英 Prompt 及运动计划
 ├── 02-visual/
 │   ├── visual_spec.json            # 视觉规格、镜头覆盖率与关键帧映射描述
+│   ├── contact_sheet.jpg           # 视觉全镜头首尾帧全景拼图 (预览用)
 │   └── keyframes/                  # 单镜首尾控制帧 (shot_XX_first.png / shot_XX_last.png)
 ├── 03-motion/
 │   └── shots/                      # 单镜无声 MP4 动态视频 (shot_XX.mp4)
@@ -87,9 +127,9 @@
 
 ---
 
-## 🎨 视觉风格引擎与扩展 (Style Engine)
+## 🎨 视觉风格引擎 (Style Engine)
 
-内置风格存储于 `.agents/skills/ai-animation/resources/styles/` 目录，均受 `_schema.json` 强校验：
+内置风格存储于 `.agents/skills/ai-animation/resources/styles/` 目录，受 `_schema.json` 强校验：
 
 - ✂️ **`vox` (Vox 纸拼贴风格)**：黑白半调人物、彩色卡纸拼贴、12fps 定格复古组装、纸张纹理与撕裂边框。适用于科技、商业、历史与科普观点表达。
 - 📖 **`storybook` (Storybook 微风纸雕绘本风格)**：多层纸雕景深、温暖水彩/马卡龙色彩、柔和微阴影与 30fps `easeInOutSine` 轻微呼吸浮动。适用于温馨绘本与故事解说。
@@ -228,4 +268,5 @@ Skill 注册后，可在 AI 交互客户端中直接使用自然语言指令：
 ## 📄 开源协议
 
 [MIT License](file:///Users/morrain/Documents/GitHub/ai-animation/LICENSE) Copyright (c) 2026 Morrain
+
 
