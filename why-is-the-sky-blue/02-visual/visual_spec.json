@@ -1,0 +1,86 @@
+{
+  "style_id": "vox",
+  "theme": {
+    "aspect_ratio": "16:9",
+    "color_palette": {
+      "background": "#F4F1EA",
+      "primary": "#E63946",
+      "secondary": "#457B9D",
+      "accent": "#E9C46A",
+      "text": "#1D3557"
+    },
+    "element_style": "cutout_paper_collage",
+    "font_family": "Inter, Noto Sans SC, sans-serif"
+  },
+  "keyframes": [
+    {
+      "shot_id": 1,
+      "keyframe_file": "keyframes/shot_01_last.png",
+      "first_frame_file": "keyframes/shot_01_first.png",
+      "last_frame_file": "keyframes/shot_01_last.png",
+      "subagent_review": {
+        "metaphor_clear": true,
+        "no_character_distortion": true,
+        "no_gibberish_text": true,
+        "style_unified": true,
+        "first_last_anchor_alignment": true,
+        "key_objects_complete": true,
+        "object_positions_logical": true,
+        "animation_plan_compliant": true
+      },
+      "prompt_used": "Use case: educational-explainer. Asset type: final still frame for a 16:9 image-to-video B-roll clip..."
+    },
+    {
+      "shot_id": 2,
+      "keyframe_file": "keyframes/shot_02_last.png",
+      "first_frame_file": "keyframes/shot_02_first.png",
+      "last_frame_file": "keyframes/shot_02_last.png",
+      "subagent_review": {
+        "metaphor_clear": true,
+        "no_character_distortion": true,
+        "no_gibberish_text": true,
+        "style_unified": true,
+        "first_last_anchor_alignment": true,
+        "key_objects_complete": true,
+        "object_positions_logical": true,
+        "animation_plan_compliant": true
+      },
+      "prompt_used": "Use case: educational-explainer. Asset type: final still frame for a 16:9 image-to-video B-roll clip..."
+    },
+    {
+      "shot_id": 3,
+      "keyframe_file": "keyframes/shot_03_last.png",
+      "first_frame_file": "keyframes/shot_03_first.png",
+      "last_frame_file": "keyframes/shot_03_last.png",
+      "subagent_review": {
+        "metaphor_clear": true,
+        "no_character_distortion": true,
+        "no_gibberish_text": true,
+        "style_unified": true,
+        "first_last_anchor_alignment": true,
+        "key_objects_complete": true,
+        "object_positions_logical": true,
+        "animation_plan_compliant": true
+      },
+      "prompt_used": "Use case: educational-explainer. Asset type: final still frame for a 16:9 image-to-video B-roll clip..."
+    },
+    {
+      "shot_id": 4,
+      "keyframe_file": "keyframes/shot_04_last.png",
+      "first_frame_file": "keyframes/shot_04_first.png",
+      "last_frame_file": "keyframes/shot_04_last.png",
+      "subagent_review": {
+        "metaphor_clear": true,
+        "no_character_distortion": true,
+        "no_gibberish_text": true,
+        "style_unified": true,
+        "first_last_anchor_alignment": true,
+        "key_objects_complete": true,
+        "object_positions_logical": true,
+        "animation_plan_compliant": true
+      },
+      "prompt_used": "Use case: educational-explainer. Asset type: final still frame for a 16:9 image-to-video B-roll clip..."
+    }
+  ],
+  "contact_sheet_file": "contact_sheet.jpg"
+}

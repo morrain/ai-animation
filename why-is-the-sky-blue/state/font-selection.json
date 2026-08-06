@@ -1,0 +1,8 @@
+{
+  "primary_zh": "Noto Sans SC",
+  "primary_en": "Inter",
+  "fallback": ["PingFang SC", "Microsoft YaHei", "sans-serif"],
+  "line_height": 1.4,
+  "margin": "15%",
+  "highlight_bg": "rgba(230, 57, 70, 0.9)"
+}

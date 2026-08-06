@@ -1,0 +1,4 @@
+file '/Users/morrain/Documents/GitHub/ai-animation/why-is-the-sky-blue/05-composition/scaled_v_shot_01.mp4'
+file '/Users/morrain/Documents/GitHub/ai-animation/why-is-the-sky-blue/05-composition/scaled_v_shot_02.mp4'
+file '/Users/morrain/Documents/GitHub/ai-animation/why-is-the-sky-blue/05-composition/scaled_v_shot_03.mp4'
+file '/Users/morrain/Documents/GitHub/ai-animation/why-is-the-sky-blue/05-composition/scaled_v_shot_04.mp4'

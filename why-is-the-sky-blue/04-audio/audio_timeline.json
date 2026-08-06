@@ -1,0 +1,79 @@
+{
+  "voice_config": {
+    "engine": "edge-tts",
+    "voice_name": "zh-CN-YunxiNeural",
+    "rate": "-15%",
+    "trial_approved": true
+  },
+  "total_audio_duration_sec": 27.89,
+  "shots": [
+    {
+      "shot_id": 1,
+      "audio_file": "shots/shot_01.wav",
+      "exact_duration_sec": 5.62,
+      "subtitles": [
+        {
+          "text": "你有没有想过",
+          "start_time": 0.0,
+          "end_time": 1.686
+        },
+        {
+          "text": "明亮的天空为什么偏偏是蓝色的",
+          "start_time": 1.686,
+          "end_time": 5.62
+        }
+      ]
+    },
+    {
+      "shot_id": 2,
+      "audio_file": "shots/shot_02.wav",
+      "exact_duration_sec": 6.67,
+      "subtitles": [
+        {
+          "text": "看起来纯白的太阳光",
+          "start_time": 0.0,
+          "end_time": 2.401
+        },
+        {
+          "text": "其实隐藏着红橙黄绿蓝靛紫七种色彩",
+          "start_time": 2.401,
+          "end_time": 6.67
+        }
+      ]
+    },
+    {
+      "shot_id": 3,
+      "audio_file": "shots/shot_03.wav",
+      "exact_duration_sec": 7.68,
+      "subtitles": [
+        {
+          "text": "当光线穿过大气层",
+          "start_time": 0.0,
+          "end_time": 2.194
+        },
+        {
+          "text": "波长较短的蓝光更容易撞击空气分子爆散开来",
+          "start_time": 2.194,
+          "end_time": 7.68
+        }
+      ]
+    },
+    {
+      "shot_id": 4,
+      "audio_file": "shots/shot_04.wav",
+      "exact_duration_sec": 7.92,
+      "subtitles": [
+        {
+          "text": "这些被四处散射的蓝色光波充满大气",
+          "start_time": 0.0,
+          "end_time": 4.224
+        },
+        {
+          "text": "便勾勒出了我们眼前的蓝色穹顶",
+          "start_time": 4.224,
+          "end_time": 7.92
+        }
+      ]
+    }
+  ]
+}

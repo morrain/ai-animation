@@ -1,0 +1,274 @@
+{
+  "meta": {
+    "title": "天空为什么是蓝色的？",
+    "core_viewpoint": "太阳白光由七彩光谱组成，其中短波长的蓝光进入大气层后与气体分子剧烈发生瑞利散射爆散开线，充满整片天空。",
+    "narrative_logic": "从人类仰望晴空抛出悬念 -> 拆解太阳白光的七彩组成 -> 演示微观波长与大气分子碰撞（瑞利散射） -> 汇聚蓝光辐射渲染完整蓝天穹顶。",
+    "emotional_arc": "好奇悬念 -> 科学拆解 -> 视觉震撼 -> 记忆留存",
+    "selected_style": {
+      "style_id": "vox",
+      "source": "default_fallback"
+    },
+    "transition_strategy": "hard-cut",
+    "fact_check_notes": [
+      "已通过 search_web 确认：瑞利散射强度与波长λ的四次方成反比（I ∝ 1/λ^4）",
+      "已确认：可见光中蓝光波长约 400-450nm，在大气气体分子（氮气、氧气）作用下散射效率极高",
+      "已确认：紫光波长虽更短但天空呈现蓝色的主因：太阳光谱中紫光辐射能量较低，且人类眼视网膜对蓝色感知更敏感"
+    ],
+    "total_shots": 4
+  },
+  "shots": [
+    {
+      "shot_id": 1,
+      "purpose": "用日常观察引出天空颜色的科学悬念",
+      "emotion": "curious",
+      "narration": "你有没有想过，明亮的天空为什么偏偏是蓝色的？",
+      "caption_phrases": [
+        "你有没有想过",
+        "明亮的天空为什么偏偏是蓝色的"
+      ],
+      "char_count": 20,
+      "visual": {
+        "meaning": "画面展现人类黑白半调人物仰望天空，天空基座由暖淡黄渐入悬挂的蓝色几何纸片",
+        "visual_proposition": "仰望视角黑白人物伫立，上方天空被一道问号状半调切片与太阳金光束引出焦点",
+        "metaphor_meaning": "用仰角视觉构图结合放大问号剪纸，将直觉日常现象转化为可探索的科学问题",
+        "key_objects": [
+          "仰望人物半调剪纸",
+          "暖奶油白地面卡纸",
+          "太阳黄色圆形纸片",
+          "金黄色日光线条",
+          "黑色巨型问号剪纸"
+        ],
+        "action_verbs": [
+          "平移入场",
+          "向上延伸",
+          "下降落位"
+        ],
+        "object_actions": [
+          "仰望人物半调剪纸：从左下角平移入场并固定",
+          "太阳黄色圆形纸片：在右上角顺时针旋转切入",
+          "黑色巨型问号剪纸：在画面中央顶部降落固定"
+        ],
+        "assembly_sequence": [
+          "地面与半调人物平移入场",
+          "太阳纸片在右上角旋转落位",
+          "问号剪纸从顶部降落悬挂"
+        ],
+        "motion_description": "开场半调人物剪纸平移至左下角仰望；右上角太阳圆形纸片旋转入场；中央上方黑色问号剪纸平缓降落落位"
+      },
+      "keyframe_prompts": {
+        "first_frame_prompt": "Use case: educational-explainer. Asset type: initial still frame for a 16:9 image-to-video B-roll clip. Primary request: Create a flat initial paper-collage backdrop with a black-and-white halftone cut-out young man (short hair, short-sleeved shirt, dark trousers) standing on a cream paper ground field looking up into an empty sky. Scene/backdrop: perfectly clean, flat light cream paper field #F4F1EA with subtle uncoated paper fiber, completely empty sky with no sun or icons. Style/medium: premium editorial stop-motion paper collage; black-and-white halftone photographic cut-outs mixed with selective warm yellow #E9C46A cardstock ground trees. Composition/framing: horizontal 16:9 locked poster frame --ar 16:9 widescreen horizontal landscape aspect ratio; person on bottom left within middle 70 percent; generous clean color-field negative space in upper right sky; 3–6 large separable paper groups. Materials/textures: printed halftone dots, machine-cut edges, thin warm-cream paper keylines #FFFDF7, soft drop shadows. Constraints: initial empty sky before sun, golden rays and question mark assemble. Avoid: no female features, no ponytail, no sun, no sun shape, no question mark, no rays, no photo corners, no scattered photo frames, no photo borders, no typography, no readable letters, no numerals, no logos, no watermark, no UI, no subtitles, no glossy 3D, no photoreal environment, no clutter.",
+        "first_frame_prompt_zh": "用例：科普解说。资产类型：用于 16:9 图生视频 B-roll 剪辑的初始静止关键帧。主要需求：创作一个平面的初始纸拼贴背景，包含站在暖奶油白纸质地面上仰望空旷天空的黑白半调年轻男子剪纸（短发、短袖衬衫、深色长裤）。场景/背景：极度纯净平坦的浅奶油白纸质色场 #F4F1EA，天空完全空置无太阳或图标。风格/媒介：高端编辑风定格纸拼贴；黑白半调照片剪纸与选择性暖黄 #E9C46A 地面树木剪纸混合。构图/画幅：水平 16:9 锁定海报画幅 --ar 16:9 宽屏横向风景画幅比例；人物位于左下方；右上天空留出充裕干净的色场负空间。负向排除：无女性特征、无马尾辫、无太阳、无太阳形状、无问号、无光线、无排版文字、无可读字母、无数字、无 Logo、无水印、无 UI 界面、无字幕、无高光 3D、无写实环境、无杂乱元素。",
+        "image_prompt": "Use case: educational-explainer. Asset type: final still frame for a 16:9 image-to-video B-roll clip. Primary request: Create a finished editorial paper-collage image showing the exact same black-and-white halftone cut-out young man (short hair, short-sleeved shirt, dark trousers) from reference image ImagePaths[0] looking up at a yellow paper sun with golden sunlight rays radiating down and a giant black question mark in center. Scene/backdrop: perfectly clean, flat light cream paper field #F4F1EA with subtle uncoated paper fiber. Style/medium: premium editorial stop-motion paper collage; black-and-white halftone photographic cut-outs mixed with selective yellow #E9C46A cardstock sun and golden yellow paper rays #E9C46A. Composition/framing: horizontal 16:9 locked poster frame --ar 16:9 widescreen horizontal landscape aspect ratio; person on bottom left, yellow sun on top right with golden paper rays radiating downwards, black question mark cut-out hanging in top center; generous clean color-field negative space; 3–6 large separable paper groups. Reference Image Conditioning: Always pass first_frame_file via ImagePaths=[first_frame_path] to lock shared visual elements. Inherit exact background scene elements, character gender, character appearance (same young man with short hair), clothing, object scale, dot/grid density, and camera framing from reference image ImagePaths[0]. Keep all static shared background elements and character identity 100% identical and frozen. Avoid: no female character, no female features, no ponytail, no photo corners, no scattered photo frames, no photo borders, no typography, no readable letters, no numerals, no logos, no watermark, no UI, no subtitles, no glossy 3D, no photoreal environment, no clutter.",
+        "image_prompt_zh": "用例：科普解说。资产类型：用于 16:9 图生视频 B-roll 剪辑的完成态静止关键帧。主要需求：创作一张完成态的编辑风纸拼贴图像，展示从参考图 ImagePaths[0] 继承的同一黑白半调年轻男子剪纸（短发、短袖衬衫、深色长裤）仰望黄色纸太阳、向下方辐射的金黄色纸光束以及中央巨型黑色问号。场景/背景：极度纯净平坦的浅奶油白纸质色场 #F4F1EA，带细微未涂布纸张纤维。风格/媒介：高端编辑风定格纸拼贴；黑白半调照片剪纸与选择性黄色 #E9C46A 卡纸太阳及金黄色纸光束 #E9C46A 混合。构图/画幅：水平 16:9 锁定海报画幅 --ar 16:9 宽屏横向风景画幅比例；人物位于左下，黄色太阳位于右上带金黄光束向下方辐射，黑色问号剪纸悬挂于顶部中央；留出充裕纯净的色场负空间。参考图锚点依赖：始终通过 ImagePaths=[first_frame_path] 传入 first_frame_file 以锁定共享视觉元素。从参考图 ImagePaths[0] 继承确切的背景场景元素、人物性别与外貌（同一短发年轻男子）、服装、物件比例、网点/网格密度及镜头构图。保持所有静态共享背景元素与人物身份 100% 一致且冻结。负向排除：无女性角色、无女性特征、无马尾辫、无照片切角、无散落相框、无相框边框、无排版文字、无可读字母、无数字、无 Logo、无水印、无 UI 界面、无字幕、无高光 3D、无写实环境、无杂乱元素。"
+      },
+      "motion_plan": {
+        "motion_prompt": "12fps stop-motion assembly. Beat 1 (0-2s): Halftone person remains standing upright on bottom left looking up, static and frozen in place (no rising, no lying down, zero posture morphing); Beat 2 (2-4.8s): Yellow paper sun pops into top right without rotation, golden paper rays extend outward from sun, giant black question mark drops into center top.",
+        "motion_prompt_zh": "12fps 定格动画组装。节拍 1 (0-2秒): 黑白半调人物在左下角保持直立仰望姿态，完全静止冻结（无起立、无卧倒、姿态零变质）；节拍 2 (2-4.8秒): 黄色纸太阳在右上降落显现（无旋转），金黄色纸光束向外延伸伸长，巨型黑色问号降落至顶部中央。",
+        "multi_beats": [
+          {
+            "beat": 1,
+            "timing": "0-2.0s",
+            "action": "Halftone person stands upright on bottom left and stays still"
+          },
+          {
+            "beat": 2,
+            "timing": "2.0-4.8s",
+            "action": "Yellow sun pops into top right, golden rays extend outward, giant question mark drops into center top"
+          }
+        ],
+        "transition_in": "none",
+        "transition_out": "none",
+        "estimated_duration_sec": 4.8
+      }
+    },
+    {
+      "shot_id": 2,
+      "purpose": "拆解太阳白光的本质，展开七彩光谱阶梯",
+      "emotion": "focused",
+      "narration": "看起来纯白的太阳光，其实隐藏着红橙黄绿蓝靛紫七种色彩。",
+      "caption_phrases": [
+        "看起来纯白的太阳光",
+        "其实隐藏着红橙黄绿蓝靛紫七种色彩"
+      ],
+      "char_count": 27,
+      "visual": {
+        "meaning": "太阳白色纯白线条穿过棱镜，展开为七彩排列的色带卡纸",
+        "visual_proposition": "白色阳光折射穿过三角棱镜，按波长顺序分层展开七种颜色的纸带剪影",
+        "metaphor_meaning": "用三角棱镜分光物理现象，直观表达看似单一的白光实际上是复色混合的因果事实",
+        "key_objects": [
+          "白色太阳光束卡纸",
+          "三角棱镜黑白半调 cut-out",
+          "红橙黄绿蓝靛紫七彩阶梯卡纸",
+          "深紫背景卡纸"
+        ],
+        "action_verbs": [
+          "水平穿透",
+          "折射偏转",
+          "阶梯展开"
+        ],
+        "object_actions": [
+          "白色太阳光束卡纸：从左侧水平向右延伸穿入棱镜",
+          "三角棱镜黑白半调 cut-out：固定在中央区域",
+          "七彩阶梯卡纸：从棱镜右侧向右下方呈扇形层层展开"
+        ],
+        "assembly_sequence": [
+          "中央三角棱镜落位",
+          "左侧白光束延伸穿入",
+          "右侧七彩卡纸阶梯展开"
+        ],
+        "motion_description": "左侧白色日光束穿入中央黑白棱镜；棱镜右侧依次向上向下呈扇形弹射展开红、橙、黄、绿、蓝、靛、紫七色切片纸带"
+      },
+      "keyframe_prompts": {
+        "first_frame_prompt": "Use case: educational-explainer. Asset type: initial still frame for a 16:9 image-to-video B-roll clip. Primary request: Create a flat paper-collage initial scene with a black-and-white halftone triangular prism in center. Scene/backdrop: perfectly flat deep purple paper field #4A4E69 with subtle uncoated paper fiber. Style/medium: premium editorial stop-motion paper collage; black-and-white halftone cut-out triangular prism in center. Composition/framing: horizontal 16:9 locked poster frame --ar 16:9 widescreen horizontal landscape aspect ratio; prism in center within middle 70 percent; generous clean color-field negative space; 3–6 large separable paper groups. Materials/textures: printed halftone dots, crisp machine-cut edges, thin warm-cream paper keylines #FFFDF7, soft drop shadows. Constraints: initial empty scene with only prism before light beam enters. Avoid: no typography, no readable letters, no numerals, no logos, no watermark, no UI, no subtitles, no glossy 3D, no photoreal environment, no clutter.",
+        "first_frame_prompt_zh": "用例：科普解说。资产类型：用于 16:9 图生视频 B-roll 剪辑的初始静止关键帧。主要需求：创作一个平面的纸拼贴初始场景，中央放置一个黑白半调三角棱镜。场景/背景：极度平坦的深紫纸质色场 #4A4E69，带细微未涂布纸张纤维。风格/媒介：高端编辑风定格纸拼贴；中央放置黑白半调三角棱镜剪纸。构图/画幅：水平 16:9 锁定海报画幅 --ar 16:9 宽屏横向风景画幅比例；棱镜位于中央 70% 区域内；留出充裕纯净的色场负空间；包含 3–6 个可分离的大组件纸片组。材质/纹理：印刷半调网点、清晰机械裁切边缘、细暖奶油白纸质描边 #FFFDF7、柔和投影。约束：光束穿入前仅包含棱镜的初始空场场景。负向排除：无排版文字、无可读字母、无数字、无 Logo、无水印、无 UI 界面、无字幕、无高光 3D、无写实环境、无杂乱元素。",
+        "image_prompt": "Use case: educational-explainer. Asset type: final still frame for a 16:9 image-to-video B-roll clip. Primary request: Create a finished editorial paper-collage image with white sunbeam entering prism and splitting into seven rainbow paper strips. Scene/backdrop: perfectly flat deep purple paper field #4A4E69 with subtle uncoated paper fiber. Style/medium: premium editorial stop-motion paper collage; black-and-white halftone cut-outs mixed with selective red #E63946, yellow #E9C46A, green #2A9D8F, blue #264653 colored cardstock. Composition/framing: horizontal 16:9 locked poster frame --ar 16:9 widescreen horizontal landscape aspect ratio; white light beam entering left of prism, seven rainbow cardstock strips fanning out on right; generous clean color-field negative space. Reference Image Conditioning: Always pass first_frame_file via ImagePaths=[first_frame_path] to lock shared visual elements. Inherit exact background scene elements, character appearance, object scale, dot/grid density, and camera framing from reference image ImagePaths[0]. Keep all static shared background elements 100% identical and frozen. Avoid: no typography, no readable letters, no numerals, no logos, no watermark, no UI, no subtitles, no glossy 3D, no photoreal environment, no clutter.",
+        "image_prompt_zh": "用例：科普解说。资产类型：用于 16:9 图生视频 B-roll 剪辑的完成态静止关键帧。主要需求：创作一张完成态的编辑风纸拼贴图像，展示白色阳光束穿入棱镜并色散分光为七彩彩虹纸条。场景/背景：极度平坦的深紫纸质色场 #4A4E69，带细微未涂布纸张纤维。风格/媒介：高端编辑风定格纸拼贴；黑白半调剪纸与选择性红色 #E63946、黄色 #E9C46A、绿色 #2A9D8F、蓝色 #264653 彩色卡纸混合。构图/画幅：水平 16:9 锁定海报画幅 --ar 16:9 宽屏横向风景画幅比例；白色光束从棱镜左侧穿入，七彩彩虹卡纸纸条在右侧呈扇形展开；留出充裕纯净的色场负空间。参考图锚点依赖：始终通过 ImagePaths=[first_frame_path] 传入 first_frame_file 以锁定共享视觉元素。从参考图 ImagePaths[0] 继承确切的背景场景元素、人物形象、物件比例、网点/网格密度及镜头构图。保持所有静态共享背景元素 100% 一致且冻结。负向排除：无排版文字、无可读字母、无数字、无 Logo、无水印、无 UI 界面、无字幕、无高光 3D、无写实环境、无杂乱元素。"
+      },
+      "motion_plan": {
+        "motion_prompt": "12fps stop-motion assembly. Beat 1 (0-2s): White cream sunbeam extends horizontally into central prism; Beat 2 (2-6.48s): Seven colored cardstock strips fan out sequentially from prism's right edge.",
+        "motion_prompt_zh": "12fps 定格动画组装。节拍 1 (0-2秒): 白色奶油日光束水平向右延伸穿入中央棱镜；节拍 2 (2-6.48秒): 七色卡纸纸条从棱镜右侧边缘按顺序呈扇形展开。",
+        "multi_beats": [
+          {
+            "beat": 1,
+            "timing": "0-2.0s",
+            "action": "White beam extends from left into prism center"
+          },
+          {
+            "beat": 2,
+            "timing": "2.0-6.48s",
+            "action": "Seven colored paper strips fan out from right side of prism"
+          }
+        ],
+        "transition_in": "none",
+        "transition_out": "none",
+        "estimated_duration_sec": 6.48
+      }
+    },
+    {
+      "shot_id": 3,
+      "purpose": "展示瑞利散射微观原理：蓝光短波与气体分子剧烈碰撞爆散",
+      "emotion": "focused",
+      "narration": "当光线穿过大气层，波长较短的蓝光更容易撞击空气分子爆散开来。",
+      "caption_phrases": [
+        "当光线穿过大气层",
+        "波长较短的蓝光更容易撞击空气分子爆散开来"
+      ],
+      "char_count": 28,
+      "visual": {
+        "meaning": "特写展示大气气体分子筛网，长波红光径直滑过，而高频锯齿蓝色小波长剧烈碰撞弹出爆散光点",
+        "visual_proposition": "规则排列的大气气泡微粒网络上，红光平直滑过，波浪式蓝光撞击节点弹出爆发放射性蓝光粒",
+        "metaphor_meaning": "用碰撞小球与筛网的力学对比，直观说明波长越短碰撞概率成倍激增的瑞利散射四次方定律",
+        "key_objects": [
+          "黑白半调大气气体分子切片网格",
+          "红色平直长波切线",
+          "蓝色波浪状短波锯齿线",
+          "蓝色爆散圆形微粒点"
+        ],
+        "action_verbs": [
+          "穿透滑过",
+          "剧烈撞击",
+          "爆散喷射"
+        ],
+        "object_actions": [
+          "红光平直长波切线：在网格上方无障碍平滑穿过",
+          "蓝色波浪状短波锯齿线：向右推进并精准撞击分子网格节点",
+          "蓝色爆散圆形微粒点：在碰撞节点四周爆发向外弹散"
+        ],
+        "assembly_sequence": [
+          "大气分子网格铺满场地",
+          "红光平直滑过",
+          "蓝光撞击网格节点爆发蓝光粒"
+        ],
+        "motion_description": "微观分子网格落位；红色长波滑过网格不受阻挡；蓝色波浪光束撞击中间分子节点后弹出放射状蓝色微粒爆散"
+      },
+      "keyframe_prompts": {
+        "first_frame_prompt": "Use case: educational-explainer. Asset type: initial still frame for a 16:9 image-to-video B-roll clip. Primary request: Create a flat paper-collage microscopic scene with atmospheric gas molecule halftone circles. Scene/backdrop: perfectly flat dark teal paper field #264653 with subtle uncoated paper fiber. Style/medium: premium editorial stop-motion paper collage; black-and-white halftone gas molecule grid cut-outs scattered neatly across center. Composition/framing: horizontal 16:9 locked poster frame --ar 16:9 widescreen horizontal landscape aspect ratio; gas molecule grid within middle 70 percent; generous clean color-field negative space; 3–6 large separable paper groups. Materials/textures: printed halftone dots, crisp machine-cut edges, thin warm-cream paper keylines #FFFDF7, soft drop shadows. Avoid: no typography, no readable letters, no numerals, no logos, no watermark, no UI, no subtitles, no glossy 3D, no photoreal environment, no clutter.",
+        "first_frame_prompt_zh": "用例：科普解说。资产类型：用于 16:9 图生视频 B-roll 剪辑的初始静止关键帧。主要需求：创作一个平面的纸拼贴微观场景，带有大气气体分子半调圆环。场景/背景：极度平坦的深青绿纸质色场 #264653，带细微未涂布纸张纤维。风格/媒介：高端编辑风定格纸拼贴；黑白半调气体分子网格剪纸整齐分布于中央。构图/画幅：水平 16:9 锁定海报画幅 --ar 16:9 宽屏横向风景画幅比例；气体分子网格位于中央 70% 区域内；留出充裕纯净的色场负空间；包含 3–6 个可分离的大组件纸片组。材质/纹理：印刷半调网点、清晰机械裁切边缘、细暖奶油白纸质描边 #FFFDF7、柔和投影。负向排除：无排版文字、无可读字母、无数字、无 Logo、无水印、无 UI 界面、无字幕、无高光 3D、无写实环境、无杂乱元素。",
+        "image_prompt": "Use case: educational-explainer. Asset type: final still frame for a 16:9 image-to-video B-roll clip. Primary request: Create a finished editorial paper-collage image showing red wave passing straight and blue wave shattering on gas molecules. Scene/backdrop: perfectly flat dark teal paper field #264653 with subtle uncoated paper fiber. Style/medium: premium editorial stop-motion paper collage; black-and-white halftone cut-outs mixed with selective red #E63946 and bright blue #2A9D8F cardstock. Composition/framing: horizontal 16:9 locked poster frame --ar 16:9 widescreen horizontal landscape aspect ratio; straight red line passing through top, short blue wavy line colliding with molecule center emitting blue dot starbursts; generous clean color-field negative space. Reference Image Conditioning: Always pass first_frame_file via ImagePaths=[first_frame_path] to lock shared visual elements. Inherit exact background scene elements, character appearance, object scale, dot/grid density, and camera framing from reference image ImagePaths[0]. Keep all static shared background elements 100% identical and frozen. Avoid: no typography, no readable letters, no numerals, no logos, no watermark, no UI, no subtitles, no glossy 3D, no photoreal environment, no clutter.",
+        "image_prompt_zh": "用例：科普解说。资产类型：用于 16:9 图生视频 B-roll 剪辑的完成态静止关键帧。主要需求：创作一张完成态的编辑风纸拼贴图像，展示红色光波平直穿过而蓝色波浪线撞击气体分子爆散。场景/背景：极度平坦的深青绿纸质色场 #264653，带细微未涂布纸张纤维。风格/媒介：高端编辑风定格纸拼贴；黑白半调剪纸与选择性红色 #E63946 及亮蓝色 #2A9D8F 卡纸混合。构图/画幅：水平 16:9 锁定海报画幅 --ar 16:9 宽屏横向风景画幅比例；平直红线穿过上方，短波蓝色波浪线撞击分子中心并喷散出蓝点爆散光芒；留出充裕纯净的色场负空间。参考图锚点依赖：始终通过 ImagePaths=[first_frame_path] 传入 first_frame_file 以锁定共享视觉元素。从参考图 ImagePaths[0] 继承确切的背景场景元素、人物形象、物件比例、网点/网格密度及镜头构图。保持所有静态共享背景元素 100% 一致且冻结。负向排除：无排版文字、无可读字母、无数字、无 Logo、无水印、无 UI 界面、无字幕、无高光 3D、无写实环境、无杂乱元素。"
+      },
+      "motion_plan": {
+        "motion_prompt": "12fps stop-motion assembly. Beat 1 (0-2s): Straight red paper ray slides through top without touching grid; Beat 2 (2-6.72s): Short blue wavy ray strikes center molecule and explodes into radial blue paper dots.",
+        "motion_prompt_zh": "12fps 定格动画组装。节拍 1 (0-2秒): 平直红色纸光线从上方滑过不接触网格；节拍 2 (2-6.72秒): 短蓝色波浪光线撞击中央分子，爆散出放射状蓝色纸圆点。",
+        "multi_beats": [
+          {
+            "beat": 1,
+            "timing": "0-2.0s",
+            "action": "Straight red paper ray slides straight through top"
+          },
+          {
+            "beat": 2,
+            "timing": "2.0-6.72s",
+            "action": "Wavy blue paper ray hits gas molecule and shatters into blue paper dots"
+          }
+        ],
+        "transition_in": "none",
+        "transition_out": "none",
+        "estimated_duration_sec": 6.72
+      }
+    },
+    {
+      "shot_id": 4,
+      "purpose": "总结全局：无数被散射的蓝光充满天空，勾勒出我们看到的蓝色穹顶",
+      "emotion": "inspired",
+      "narration": "这些被四处散射的蓝色光波充满大气，便勾勒出了我们眼前的蓝色穹顶。",
+      "caption_phrases": [
+        "这些被四处散射的蓝色光波充满大气",
+        "便勾勒出了我们眼前的蓝色穹顶"
+      ],
+      "char_count": 31,
+      "visual": {
+        "meaning": "散射的蓝色光粒向四周弥散铺满，组成半圆形蓝色穹顶与人类微缩黑白图表",
+        "visual_proposition": "无数蓝色微粒扩展汇聚成一层半透明蓝色弧形穹顶，罩在地球与人类半调图表之上",
+        "metaphor_meaning": "用蓝色纸半圆穹顶将微观光点粒子升华为宏观天空现象，完成科学原理到生活现象的闭环",
+        "key_objects": [
+          "半圆形蓝色卡纸穹顶",
+          "黑白半调地球弧线与人类剪面",
+          "周围辐射散落的蓝光圆点",
+          "芥末黄装饰光芒切面"
+        ],
+        "action_verbs": [
+          "向外扩散",
+          "合拢覆盖",
+          "亮起耀斑"
+        ],
+        "object_actions": [
+          "周围辐射散落的蓝光圆点：向四周方向扩散填满空气空间",
+          "半圆形蓝色卡纸穹顶：从中央向上如伞面般张开合拢",
+          "黑白半调地球弧线与人类剪面：在穹顶下方平稳显露"
+        ],
+        "assembly_sequence": [
+          "地球弧线与人类剪面落位",
+          "蓝色圆点向四面铺开",
+          "蓝色半圆穹顶在上方张开合拢"
+        ],
+        "motion_description": "下方地球弧线与人类剪面显现；四周无数蓝色圆点向外扩展铺满；半圆形蓝色穹顶从中央向两侧顺滑展开合拢，覆盖整片天空"
+      },
+      "keyframe_prompts": {
+        "first_frame_prompt": "Use case: educational-explainer. Asset type: initial still frame for a 16:9 image-to-video B-roll clip. Primary request: Create a flat paper-collage initial scene with a black-and-white halftone Earth horizon curve at bottom. Scene/backdrop: perfectly flat warm cream paper field #F4F1EA with subtle uncoated paper fiber. Style/medium: premium editorial stop-motion paper collage; black-and-white halftone Earth horizon curve at bottom center. Composition/framing: horizontal 16:9 locked poster frame --ar 16:9 widescreen horizontal landscape aspect ratio; Earth curve on bottom within middle 70 percent; generous clean color-field negative space; 3–6 large separable paper groups. Materials/textures: printed halftone dots, machine-cut edges, thin warm-cream paper keylines #FFFDF7, soft drop shadows. Avoid: no typography, no readable letters, no numerals, no logos, no watermark, no UI, no subtitles, no glossy 3D, no photoreal environment, no clutter.",
+        "first_frame_prompt_zh": "用例：科普解说。资产类型：用于 16:9 图生视频 B-roll 剪辑的初始静止关键帧。主要需求：创作一个平面的纸拼贴初始场景，底部带有黑白半调地球地平线弧影。场景/背景：极度平坦的暖奶油白纸质色场 #F4F1EA，带细微未涂布纸张纤维。风格/媒介：高端编辑风定格纸拼贴；底部中央放置黑白半调地球地平线弧线。构图/画幅：水平 16:9 锁定海报画幅 --ar 16:9 宽屏横向风景画幅比例；地球弧线位于底部中央 70% 区域内；留出充裕纯净的色场负空间；包含 3–6 个可分离的大组件纸片组。材质/纹理：印刷半调网点、机械裁切边缘、细暖奶油白纸质描边 #FFFDF7、柔和投影。负向排除：无排版文字、无可读字母、无数字、无 Logo、无水印、无 UI 界面、无字幕、无高光 3D、无写实环境、无杂乱元素。",
+        "image_prompt": "Use case: educational-explainer. Asset type: final still frame for a 16:9 image-to-video B-roll clip. Primary request: Create a finished editorial paper-collage image showing a bright blue semi-circle dome covering the Earth with scattered blue dots around. Scene/backdrop: perfectly flat warm cream paper field #F4F1EA with subtle uncoated paper fiber. Style/medium: premium editorial stop-motion paper collage; black-and-white halftone cut-outs mixed with selective vibrant blue #2A9D8F cardstock dome. Composition/framing: horizontal 16:9 locked poster frame --ar 16:9 widescreen horizontal landscape aspect ratio; blue dome covering top of Earth curve, blue dots scattering outwards into cream sky; generous clean color-field negative space. Reference Image Conditioning: Always pass first_frame_file via ImagePaths=[first_frame_path] to lock shared visual elements. Inherit exact background scene elements, character appearance, object scale, dot/grid density, and camera framing from reference image ImagePaths[0]. Keep all static shared background elements 100% identical and frozen. Avoid: no typography, no readable letters, no numerals, no logos, no watermark, no UI, no subtitles, no glossy 3D, no photoreal environment, no clutter.",
+        "image_prompt_zh": "用例：科普解说。资产类型：用于 16:9 图生视频 B-roll 剪辑的完成态静止关键帧。主要需求：创作一张完成态的编辑风纸拼贴图像，展示亮蓝色半圆穹顶覆盖地球，周围散落着蓝色圆点。场景/背景：极度平坦的暖奶油白纸质色场 #F4F1EA，带细微未涂布纸张纤维。风格/媒介：高端编辑风定格纸拼贴；黑白半调剪纸与选择性亮蓝色 #2A9D8F 卡纸穹顶混合。构图/画幅：水平 16:9 锁定海报画幅 --ar 16:9 宽屏横向风景画幅比例；蓝色穹顶覆盖地球弧线上方，蓝色粒子向奶油白天空向外散射；留出充裕纯净的色场负空间。参考图锚点依赖：始终通过 ImagePaths=[first_frame_path] 传入 first_frame_file 以锁定共享视觉元素。从参考图 ImagePaths[0] 继承确切的背景场景元素、人物形象、物件比例、网点/网格密度及镜头构图。保持所有静态共享背景元素 100% 一致且冻结。负向排除：无排版文字、无可读字母、无数字、无 Logo、无水印、无 UI 界面、无字幕、无高光 3D、无写实环境、无杂乱元素。"
+      },
+      "motion_plan": {
+        "motion_prompt": "12fps stop-motion assembly. Beat 1 (0-2s): Halftone Earth horizon settles at bottom; Beat 2 (2-7.44s): Scattered blue paper dots expand outwards, vibrant blue paper dome unfolds upward to cover top sky.",
+        "motion_prompt_zh": "12fps 定格动画组装。节拍 1 (0-2秒): 黑白半调地球地平线在底部落位；节拍 2 (2-7.44秒): 散落的蓝色纸微粒向四周扩张，亮蓝色纸穹顶向上展开合拢罩住天空。",
+        "multi_beats": [
+          {
+            "beat": 1,
+            "timing": "0-2.0s",
+            "action": "Halftone Earth horizon settles at bottom"
+          },
+          {
+            "beat": 2,
+            "timing": "2.0-7.44s",
+            "action": "Blue paper dots expand and blue dome unfolds to enclose top sky"
+          }
+        ],
+        "transition_in": "none",
+        "transition_out": "none",
+        "estimated_duration_sec": 7.44
+      }
+    }
+  ]
+}
