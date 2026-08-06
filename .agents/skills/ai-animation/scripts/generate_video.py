@@ -69,13 +69,16 @@ def generate_shot_video(project_dir, shot_id=1, provider_config=None):
     print(f"  ├─ 预估时长: {duration_sec}s")
     print(f"  └─ 运动 Prompt: {motion_prompt}")
 
+    # 强化 12fps 剪纸定格 Prompt 物理约束
+    full_motion_prompt = f"12fps stop-motion paper assembly, items slide in and lock into place from empty backdrop, 2D flat paper motion, zero fluid morphing, zero 3D volumetric light, zero glow. {motion_prompt}"
+
     # 获取解耦出来的 Video Provider (默认解析 VIDEO_PROVIDER_CONFIG 或 providers/video/agnes_ai.json)
     provider = get_video_provider(provider_config)
 
     success = provider.generate(
         first_frame_path=first_frame_path,
         last_frame_path=last_frame_path,
-        prompt=motion_prompt,
+        prompt=full_motion_prompt,
         output_mp4_path=out_mp4_path,
         duration_sec=duration_sec
     )
@@ -98,18 +101,38 @@ def generate_shot_video(project_dir, shot_id=1, provider_config=None):
             ffmpeg_bin, "-y",
             "-loop", "1", "-t", str(half_dur), "-i", first_frame_path,
             "-loop", "1", "-t", str(half_dur), "-i", last_frame_path,
-            "-filter_complex", f"[0:v][1:v]xfade=transition=fade:duration=0.5:offset={offset:.2f},format=yuv420p",
+            "-filter_complex", f"[0:v][1:v]xfade=transition=fade:duration=0.5:offset={offset:.2f},fps=12,format=yuv420p",
             "-c:v", "libx264", "-r", "12",
             out_mp4_path
         ]
         ret = os.system(" ".join(ff_cmd) + " >/dev/null 2>&1")
         if ret == 0 and os.path.exists(out_mp4_path) and os.path.getsize(out_mp4_path) > 0:
-            print(f"✨ [FFmpeg Fallback]: 镜头 #{shot_id} 本地定格缓动动画合成成功: {out_mp4_path}")
+            print(f"✨ [FFmpeg Fallback]: 镜头 #{shot_id} 本地 12fps 定格缓动动画合成成功: {out_mp4_path}")
             success = True
         else:
             print(f"💥 镜头 #{shot_id} 视频生成与 FFmpeg fallback 均失败!")
 
-    if success:
+    if success and os.path.exists(out_mp4_path):
+        # 强制执行 12fps 抽帧与色彩平坦化净化后处理
+        ffmpeg_bin = None
+        try:
+            import imageio_ffmpeg
+            ffmpeg_bin = imageio_ffmpeg.get_ffmpeg_exe()
+        except Exception:
+            pass
+        if ffmpeg_bin and os.path.exists(ffmpeg_bin):
+            clean_tmp = out_mp4_path.replace(".mp4", "_12fps_clean.mp4")
+            clean_cmd = [
+                ffmpeg_bin, "-y",
+                "-i", out_mp4_path,
+                "-vf", "fps=12,eq=saturation=1.1:contrast=1.05",
+                "-c:v", "libx264", "-pix_fmt", "yuv420p",
+                clean_tmp
+            ]
+            if os.system(" ".join(clean_cmd) + " >/dev/null 2>&1") == 0 and os.path.exists(clean_tmp):
+                os.replace(clean_tmp, out_mp4_path)
+                print(f"✨ [12fps Stop-Motion Cleaned]: 镜头 #{shot_id} 已成功执行 12fps 抽帧定格净化！")
+
         print(f"✨ 镜头 #{shot_id} 视频处理完成: {out_mp4_path}")
 
     return success

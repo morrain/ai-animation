@@ -124,15 +124,14 @@ export VIDEO_PROVIDER_CONFIG="providers/video/agnes_ai.json"
 
 项目根目录及 `scripts/` 内提供了一套完备的 Python/Node 自动化脚本：
 
-### 1. 项目完整性与 Schema 静态校验
+### 1. 项目完整性与 Schema 阶段契约巡检 (SubAgent Validation)
 
-```bash
-# 全流程贯穿校验 (依次校验编导、视觉、运动、音频产物落地情况)
-python3 .agents/skills/ai-animation/scripts/project_validator.py validate-all why-is-the-sky-blue
-
-# 校验阶段一 18.375s 时长限制与标点符号剥离
-python3 .agents/skills/ai-animation/scripts/project_validator.py validate-director why-is-the-sky-blue/01-director/storyboard.json
-```
+全流程遵循解耦契约与五阶段巡检规范（详见 [validation-rules.md](.agents/skills/ai-animation/references/validation-rules.md)）。Agent 在各个阶段生成产物后，将自动调起 SubAgent 逐阶段进行智能校验：
+- **Phase 1 编导**：18.375s 硬上限拆镜、`caption_phrases` 标点符号彻底剥离、双语 Prompt 与视觉三要素完整性。
+- **Phase 2 视觉**：`visual_spec.json` 100% 镜头覆盖率、静帧图像磁盘物理落地与无乱码盲审。
+- **Phase 3 运动**：单镜无声 MP4 视频落地、构图重心与无扭曲融化动态质检。
+- **Phase 4 声音**：`audio_timeline.json` 覆盖率、WAV 声音采样真实精准时长解析。
+- **Phase 5 合成**：Master Clock 时间线对齐与成片音画同步质检。
 
 ### 2. 静态关键帧自动化生成
 
@@ -144,14 +143,11 @@ python3 .agents/skills/ai-animation/scripts/generate_image.py why-is-the-sky-blu
 python3 .agents/skills/ai-animation/scripts/generate_image.py why-is-the-sky-blue --all
 ```
 
-### 3. 图像规整与 Contact Sheet 拼合
+### 3. 图像规整
 
 ```bash
 # 无损铺面模式规整图像至 1280x720 (16:9)
 python3 .agents/skills/ai-animation/scripts/video_builder.py resize input.png output.png
-
-# 合成分镜预览联系单 (Contact Sheet)
-python3 .agents/skills/ai-animation/scripts/video_builder.py contact-sheet sheet.jpg img1.png img2.png img3.png
 ```
 
 ### 4. 动态无声视频片段渲染

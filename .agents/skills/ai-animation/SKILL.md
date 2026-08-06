@@ -66,15 +66,15 @@ description: 将想法、问题、文章等资料改写并制作成带专业口�
 
 Skill 默认开启 **SubAgent 自动化审查 + 人工门控机制**：
 
-1. **编导方案门控 (Director Gate)**：Phase 1 编导方案生成后暂停，全量呈报 `storyboard.json` 的所有关键信息（包含核心观点、事实核查依据、台词字幕拆解、**视觉寓意 (`metaphor_meaning`)**、**具体画面元素明细 (`elements_detail`)**、**整体分镜动画效果与具体运动说明 (`motion_description`)**、生图 Prompt **及其中文对照说明**、多节拍运动计划与预估时长），由用户全面审核确认。
+1. **编导方案门控 (Director Gate)**：Phase 1 编导方案生成后暂停，全量呈报 `storyboard.json` 的所有关键信息（包含核心观点、事实核查依据、台词字幕拆解、**一句话视觉命题 (`visual_proposition`)**、**3–6 个核心物件 (`key_objects`)**、**视觉寓意 (`metaphor_meaning`)**、**物件动作与因果表达逻辑 (`object_actions`)**、**组装落位顺序 (`assembly_sequence`)**、**整体分镜动画效果与运动说明 (`motion_description`)**、生图 Prompt **及全量中文完整对译 (`*_zh`)**、多节拍运动计划与预估时长），由用户全面审核确认。
 2. **静帧样板组 SubAgent 盲审与门控 (Keyframe Gate)**：
    - 严禁一次性全量批量调用生图模型！在 Phase 2 开始时，**必须且仅能优先生成 Shot #1 的单张关键帧样板图**。
-   - **SubAgent 盲审**：检查 Shot #1 样板图的隐喻清晰度、人物无变形、无乱码假字、风格统一性。
-   - **人工确认**：将 Shot #1 样板图呈现给用户，**停止后续 Tool Call 等待确认**。用户确认风格与画质满意后，方可批量生成 Shot #2~N 的全量静帧及首末帧控制图，并统一调用 `python3 video_builder.py contact-sheet` 在本地无损拼接合成 `contact_sheet.jpg`（严禁调用生图模型）。
+   - **SubAgent 盲审**：调起 SubAgent 严格依照 `references/validation-rules.md` 审核 Shot #1 样板图的 8 项静态视觉指标（包含物理落地、隐喻清晰度、无变形假字及动作方案契合度等）。
+   - **人工确认**：将 Shot #1 样板图呈现给用户，**停止后续 Tool Call 等待确认**。用户确认风格与画质满意后，方可批量生成 Shot #2~N 的全量静帧及首末帧控制图。
 3. **动画样片 SubAgent 动态审核与门控 (Motion Pilot Gate)**：
    - 必须通过 AI 图生视频大模型（Image-to-Video Model）输入首末帧与 `motion_prompt` 渲染真实视觉元素运动视频（详见 `references/03-motion-spec.md`）。
    - 优先渲染首个单镜头（Shot #1）的动态无声视频样片。
-   - **SubAgent 动态审核**：检查机位、构图、物理变形、真实运动迹线、末帧对齐及视觉元素切入节奏。
+   - **SubAgent 动态审核**：调起 SubAgent 严格依照 `references/validation-rules.md` 检查机位、构图、物理变形、真实运动迹线、末帧对齐及视觉元素切入节奏。
    - **人工确认**：审核通过后提交用户试看确认。
 4. **旁白试听门控 (Audio Trial Gate)**：
    - 优先生成一小段旁白试听音频片段（`audio_trial.wav`）。
@@ -82,7 +82,7 @@ Skill 默认开启 **SubAgent 自动化审查 + 人工门控机制**：
 
 **双驱动模式与门控硬阻断协议 (Hard Gate Stop Protocol)**：
 - **`human-gated` (默认模式)**：按上述 4 重门控逐级呈报用户原话批准，确保品质完全可控。
-  - 🛑 **硬阻断规则 (Mandatory Turn End)**：Agent 在生成当前阶段的中间产物并运行 `project_validator.py` 校验成功后，**必须立即停止调用后续阶段的任何工具（即本轮 Turn 不再发起 Tool Call）**，并在回复文本中将呈报内容（脚本表格、样板静态网格、无声样片视频或试听音频）完整展现给用户，明确提示等待用户审核批准。禁止在未收到用户确认前连同后续 Tool 一并执行。
+  - 🛑 **硬阻断规则 (Mandatory Turn End)**：Agent 在生成当前阶段的中间产物并调起 SubAgent 依照 `references/validation-rules.md` 审核通过后，**必须立即停止调用后续阶段的任何工具（即本轮 Turn 不再发起 Tool Call）**，并在回复文本中将呈报内容（脚本表格、样板静态网格、无声样片视频或试听音频）完整展现给用户，明确提示等待用户审核批准。禁止在未收到用户确认前连同后续 Tool 一并执行。
 - **`full-auto` (全自动模式)**：仅在用户输入中包含显式全自动指令授权（如开启 `--full-auto` 标识）时生效。自动跳过人工等待，但保留 Agent 自动盲审质检与失败阻断。
 
 **项目状态冰封快照协议 (`<topic_slug>/state/`)**：

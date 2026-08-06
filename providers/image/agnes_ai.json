@@ -3,7 +3,7 @@
   "create_url": "https://apihub.agnes-ai.com/v1/images/generations",
   "method": "POST",
   "headers": {
-    "Authorization": "Bearer sk-nKZVQn6ekY6bZyaEQ2pokPdbwXWzFeIu5SRkVEaAAyMQSiBp",
+    "Authorization": "Bearer xxx",
     "Content-Type": "application/json"
   },
   "payload_template": {
@@ -18,7 +18,8 @@
   "img2img_payload_template": {
     "model": "agnes-image-2.1-flash",
     "prompt": "${PROMPT}",
-    "size": "1024x768",
+    "size": "${SIZE}",
+    "ratio": "${RATIO}",
     "extra_body": {
       "image": [
         "${REF_IMAGE_URL}"

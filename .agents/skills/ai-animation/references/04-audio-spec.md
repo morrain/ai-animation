@@ -21,9 +21,8 @@
 4. **批量生成无损 WAV (Bulk WAV Generation)**：
    - 用户确认通过后，按分镜批量渲染无损 WAV 音频文件（`shots/shot_{shot_id}.wav`），并捕捉精准字/句级时间戳。
 
-### 3. 时间轴及精准度硬性防线
-- **WAV 物理精准度防线**：计算每个分镜的音频物理时长及 SRT 字幕时间戳时，必须优先使用 Python 标准库原生 `wave` 模块（解析真实采样数 `wf.getnframes() / wf.getframerate()`），严禁在获取本地已生成的真实 WAV 声音文件时降级误用粗暴的字符估算逻辑！
-- **字幕零漂移规则**：所有 SRT 全局时间戳均基于全片零 AAC 延时的无损物理 WAV 时间轴直接累加计算。
+### 3. SubAgent 声音契约与时间轴审查 (Phase 4 SubAgent Review)
+- 在批量生成 WAV 音频及 `audio_timeline.json` 后，必须调起 SubAgent 严格依照 [validation-rules.md](validation-rules.md#声音阶段校验规则-phase-4-audio-rules) 对声音产物进行审查（包含镜头 100% 覆盖率、WAV 物理存在、物理采样精度与字幕零漂移校准）。
 
 ## 📤 中间产物规范
 保存路径：

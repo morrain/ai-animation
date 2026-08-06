@@ -35,7 +35,9 @@
 1. **Vox 风格 (`vox`)**：
    - 帧率：12 fps (抽帧定格感)
    - 缓动算法：`steps(4, end)` / Snap Discrete
+   - 动作演进逻辑：从空场或初始基座逐件滑入卡位组装 (`Assemble-From-Empty`)，动作提示词包含 `12fps stop-motion paper assembly, items slide in and lock into place from empty backdrop, 2D flat paper motion, zero fluid morphing`
    - 动作效果：组件逐件组装 (Assembly)、盖章压印、平移滑入
+   - 净化处理：生成的 MP4 强制经过 FFmpeg `fps=12` 抽帧定格下采样与色彩平坦化净化
 2. **Storybook 风格 (`storybook`)**：
    - 帧率：30 fps
    - 缓动算法：`easeInOutSine`
@@ -48,13 +50,7 @@
 1. **生成单镜动画样片 (Pilot Sample Generation)**：
    - 基于静态关键帧及其首尾帧，优先渲染首个单镜（Shot #1）的动态无声视频样片。
 2. **SubAgent 动态审核 (SubAgent Motion Review)**：
-   - 调起 SubAgent 专门对动画样片进行 6 项核心指标审查：
-     - 📷 **机位 (Camera Framing & Angle)**：镜头推拉摇移是否符合分镜设定。
-     - 🖼️ **构图 (Composition Balance)**：主体在运动中是否保持画面重心稳定。
-     - 🌀 **变形 (Deformation Artifacts)**：运动过程中人体或物体是否有扭曲融化。
-     - 🔄 **转场 (Transitions)**：入场/出场过渡动作是否平滑自然。
-     - 🏁 **末帧对齐 (End Frame Alignment)**：末帧落脚点是否与视觉规划严格一致。
-     - 📥 **元素按计划切入 (Plan Entry)**：各视觉组件是否按照分镜计划的顺序和节奏切入画面。
+   - 调起 SubAgent 严格依照 [validation-rules.md](validation-rules.md#运动阶段校验规则-phase-3-motion-rules) 检验单镜 MP4 文件存在性与非空落地，并执行 6 项动态质量指标审查（详情参阅 [validation-rules.md](validation-rules.md#2-subagent-动态运动质量-6-项指标-motion-quality-metrics)）。
 3. **人工确认门控 (Human Gate)**：
    - 将 SubAgent 审核通过的动画样片提交给用户进行**人工确认**。在 `human-gated` 模式下，呈报后**必须暂停流程（不得发起下一轮 Tool Call）**。
    - 用户确认满意后，系统方全量批量推进其余分镜的动画生成。

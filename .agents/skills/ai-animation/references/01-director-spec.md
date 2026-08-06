@@ -36,9 +36,10 @@ Agent 接收到原始素材后，**绝不直接凭空生成脚本**，必须严�
 2. **叙事逻辑与核心观点提炼 (Narrative Architecture)**：
    - 梳理知识演进线（抛出 Hook 悬念 -> 科学原理/反常冲突 -> 概念命名 -> 机制展开 -> 适用边界 -> 总结记忆句）。
 3. **视觉隐喻与运动效果设计 (Visual Metaphor & Motion Design)**：
-   - 将抽象概念转化为具体的视觉比喻与动画轨迹（包含：画面呈现什么具象寓意、具体要有哪些画面元素、元素如何运动呈现因果关系；如：将“瑞利散射”比喻为“弹珠穿过网格筛网”，将“神经元传导”比喻为“电路接力”）。
+   - 绝不先想画面再强凑观点。严格执行编导提炼步骤：**①核心意思 -> ②情绪功能 -> ③一句话视觉命题 -> ④明确 3–6 个核心物件 (`key_objects`) -> ⑤核心动作动词 (`action_verbs`) -> ⑥物件动作与组装逻辑 (`object_actions` & `assembly_sequence`)**。
+   - 将抽象概念转化为具体的具象物体互动（如：将“经验重复消耗”设计为“剪刀在胶片时钟上切断”；将“瑞利散射”设计为“蓝光微粒撞击规则大气网格筛网向四周爆散”）。
 4. **分镜切分与转场规划 (Shot Breakdown & Transitions)**：
-   - 逐镜头拆解台词，为每一个单镜分配精准的画面描述、具象元素明细、视觉寓意、整体动画效果说明、自包含 Prompt 与转场指令。
+   - 逐镜头拆解台词，为每一个单镜分配精准的视觉命题、3–6 个核心物件明细 (`key_objects`)、动作动词、物件动作逻辑映射、组装顺序、自包含 Prompt 与转场指令。
 
 ---
 
@@ -63,11 +64,19 @@ Agent 遵循以下严格顺序确定当前项目的视觉与运动风格规范�
      3. **构图与字幕避让 (`Composition & Subtitle Margin`)**：字幕避让是指将人脸、核心隐喻符号等焦点元素置于中上部区域避开底部字幕遮挡；背景及延伸场景可自然铺满整屏，严禁刻意挖空挖洞或写 clear for subtitles 以防模型画出黑色字幕框。
      4. **材质与 HEX 色号 (`Materials & Semantic Palette`)**：显式写入风格规范中的背景 HEX 色号（如 `#F4F1EA` / `#1D3557`）及点缀色 HEX 色号、白描边 Keyline 属性与切面阴影。
      5. **负向硬排除 (`Negative Constraints`)**：必须包含 `no cropping, no black bars, no letterbox, no borders, no solid black subtitle rectangle, no readable text, no letters, no numbers, no logos, no glossy 3D, no neon glow, no volumetric light, no digital lens flare`，防止模型把光谱或彩虹生成为科技感三维发光/虚化光晕。
-   - **双语字段硬绑定**：在 `storyboard.json` 中，所有英文提示词字段必须附带对应的 `*_zh` 中文对译字段（如 `first_frame_prompt_zh`, `image_prompt_zh`, `motion_prompt_zh`），专供人类审计阅读，实现“英文供模型生成，中文供人类审阅”。
+   - **双语全量对译硬绑定**：在 `storyboard.json` 中，所有英文提示词字段必须附带对应的 `*_zh` 中文对译字段（如 `first_frame_prompt_zh`, `image_prompt_zh`, `motion_prompt_zh`），专供人类审计阅读。**中文对译绝不能仅写成 1–2 句简略摘要，必须完整保留英文 Prompt 的全部细节与段落结构**（包含资产画幅、视觉命题、场景背景、风格材质、HEX 色号、参考图继承锚点、负向硬排除以及运动节拍等），实现英文供模型生成、中文供人类审阅的 1:1 全量内容对等。
 5. **连续分镜视觉继承协议 (Continuous Shot Continuity Protocol)**：
    - **连续场景判定与标记**：在编导拆分分镜时，若判定当前分镜 N（如分镜 2）与前一分镜 N-1（如分镜 1）在视觉场景、人物、色彩或空间逻辑上是连续承接的，必须在 `storyboard.json` 镜头字段中显式标记连续性参数：`"refer_previous_end_frame": true` 与 `"reference_shot_id": N-1`。
    - **首帧 Prompt 继承指令**：分镜 N 的 `first_frame_prompt` 头部必须显式声明继承前一镜头尾帧的背景与元素，写为：`Inherit exact background scene elements, character appearance, object scale, color palette and camera framing from Shot #{N-1} end frame (reference image ImagePaths[0]); keep all static shared elements 100% identical and frozen`。
    - **中文 Prompt 同步对译**：对应的 `first_frame_prompt_zh` 也需显式写入：`继承分镜 #{N-1} 尾帧的背景场景、人物形象、色彩色板与构图视角，保持共有静态元素完全一致`。
+6. **首尾帧演进范式 (Assemble-From-Empty Rule)**：
+   - **尾帧是视觉真相**：尾帧 (`last_frame`) 必须完整表达隐喻，所有最终纸片元素、位置、比例和颜色均在尾帧确定。
+   - **首帧为初始空场/基座态 (`Assemble-From-Empty`)**：首帧 (`first_frame`) 必须是冲突发生前或变化启动前的初始状态/空场背景（只保留必要的主体或环境框架，留出充足负空间），为后续纸片元素滑入落位提供运动空间。
+   - **首帧排除入场物件铁律 (First Frame Object Exclusion Rule)**：针对在后续运动节拍 (`multi_beats`) 中计划旋转切入、降落落位或平滑滑入的任何核心物件（如太阳、问号、光线），在 `first_frame_prompt` 的正向描述与负向排除 (`Avoid`) 中**必须强制显式排除该物件**（如 `Avoid: no sun, no question mark`），严禁首帧提前出现未来节拍才切入的物件，防止首尾帧出现物件位置跳闪突变或状态矛盾。
+   - **运动描述规范 (`motion_description`)**：只能使用 2D 剪纸平移 (Slide)、落位 (Drop)、旋转 (Rotate)、遮罩显现 (Mask) 等平面物理动作；**严禁使用** `flowing, glowing, shimmering, morphing, light rays` 等可能诱导 AI 生成 3D 流体变形或科幻光晕的模糊描述。
+7. **运动 Prompt 防误幻觉与预渲染姿态锁规范 (Motion Prompt Posture Lock Protocol)**：
+    - **首帧在场主体姿态锁定**：在首帧 (`first_frame_prompt`) 中已预渲染落座/伫立的人物或主体，`motion_prompt` 必须显式声明其**保持初始直立姿态不动**（如 `the halftone cut-out person remains standing upright, static and frozen in place; zero posture morphing, no rising from floor`）。
+    - **严禁使用动作歧义动词**：严禁使用 `slides in from bottom`（易被模型误理解为从地面翻起卧倒）、`enters from ground` 等模糊词汇。若需刚体平移，必须显式声明为 **平面 2D 刚体平移**（如 `slides horizontally from left edge in upright standing pose, 2D rigid translation, no body bending or crawling`）。
 
 ---
 
@@ -89,9 +98,9 @@ Agent 遵循以下严格顺序确定当前项目的视觉与运动风格规范�
 1. **18.375 秒硬上限拆镜**：
    - 在 24fps 下，视频单镜头动画渲染硬上限为 `441 帧 (18.375 秒)`。
    - 若台词预估时长超过 18.375 秒，**必须在自然语义停顿处强制切拆为不同镜头**，严禁生成超长视频后强行变速伸缩。
-2. **字符数预估公式 (`char_count`)**：
+2. **字符数预估公式与精确更正 (`char_count`)**：
    - 编导阶段统计有效字符数：`char_count = 汉字数 + 英文单词数 + 数字位数`。
-   - 初始预估时长公式：`estimated_duration_sec = char_count * 0.24`（按基线语速约 4.1~4.2 字/秒折算），后续在 Phase 4 声音试听确认后修正精确值。
+   - 初始预估时长公式：`estimated_duration_sec = char_count * 0.24`（精确按基线语速约 4.16 字/秒折算），后续在 Phase 4 声音生成物理 WAV 后，以实测精确定步修正覆盖为 `exact_duration_sec`。
 3. **字幕短语与 TTS 标点解耦**：
    - `narration`：保留完整的标点符号，专门用于 TTS 自然断句与停顿合成。
    - `caption_phrases`：**完全剥离标点符号**，按语义及停顿分割为干净短语数组，专供画面动态字幕高亮渲染。
@@ -131,9 +140,16 @@ Agent 遵循以下严格顺序确定当前项目的视觉与运动风格规范�
       "char_count": 18,
       "visual": {
         "meaning": "视角从晴朗天空穿透大气层，出现抽象的大气气体分子阵列",
+        "visual_proposition": "太阳白光束向下穿入大气规则筛网，撞击爆发放射状蓝光粒子散落",
         "metaphor_meaning": "用筛网阻挡与太阳白光分光束流，直观呈现看似纯白的光线实际上暗藏多色混合的因果命题",
-        "elements": ["sun_light_ray", "atmosphere_grid", "blue_scattering_particles"],
-        "elements_detail": "包含：仰望天空的黑白半调人物剪纸、规则点阵大气层线框筛网、太阳复合白光束、散落的蓝色卡纸圆形微粒",
+        "key_objects": ["人物剪纸", "大气网格筛网", "太阳白光束", "蓝光散射粒子"],
+        "action_verbs": ["平移入场", "延伸穿透", "撞击爆散"],
+        "object_actions": [
+          "人物剪纸：平移入场并抬头仰望，引导视线",
+          "太阳白光束：沿中轴线向下延伸穿透大气筛网",
+          "蓝光散射粒子：撞击网格节点后爆发放射状平散"
+        ],
+        "assembly_sequence": ["大气网格筛网入场落位", "白光束向下延伸", "蓝光粒子撞击爆发"],
         "motion_description": "开场半调人物平移入场并抬头；太阳白光沿中轴线向下快速延伸穿入大气筛网；蓝光粒子撞击筛网节点后爆发向四周放射状平移动画"
       },
       "keyframe_prompts": {
@@ -143,15 +159,15 @@ Agent 遵循以下严格顺序确定当前项目的视觉与运动风格规范�
         "image_prompt_zh": "Vox解说风格纸拼贴完成态关键帧：彩虹光束完整延伸穿入大气线网格..."
       },
       "motion_plan": {
-        "motion_prompt": "12fps stop-motion assembly. Beat 1 (0-2s): Atmosphere grid enters; Beat 2 (2-4.5s): Blue particles scatter on collision...",
-        "motion_prompt_zh": "12fps抽帧定格动画组装。节拍1 (0-2s): 大气网格入场落位；节拍2 (2-4.5s): 蓝光粒子碰撞爆散...",
+        "motion_prompt": "12fps stop-motion assembly. Beat 1 (0-2s): Atmosphere grid enters; Beat 2 (2-4.32s): Blue particles scatter on collision...",
+        "motion_prompt_zh": "12fps抽帧定格动画组装。节拍1 (0-2s): 大气网格入场落位；节拍2 (2-4.32s): 蓝光粒子碰撞爆散...",
         "multi_beats": [
           { "beat": 1, "timing": "0-2.0s", "action": "Atmosphere grid enters and settles" },
-          { "beat": 2, "timing": "2.0-4.5s", "action": "Blue light rays hit grid and scatter" }
+          { "beat": 2, "timing": "2.0-4.32s", "action": "Blue light rays hit grid and scatter" }
         ],
         "transition_in": "none",
         "transition_out": "none",
-        "estimated_duration_sec": 4.5
+        "estimated_duration_sec": 4.32
       }
     },
     {
@@ -165,9 +181,16 @@ Agent 遵循以下严格顺序确定当前项目的视觉与运动风格规范�
       "char_count": 22,
       "visual": {
         "meaning": "特写视角连续承接上镜，近景放大大气微粒与蓝光光束",
+        "visual_proposition": "特写放大单个气体微粒，极短波长蓝光束高速撞击弹散出环形光晕",
         "metaphor_meaning": "用乒乓球碰撞密集筛网直观演示粒子爆散与波长反比规律",
-        "elements": ["atmosphere_grid", "blue_scattering_particles", "magnified_particle"],
-        "elements_detail": "包含：特写放大气体单分子、蓝色小球粒子束、高亮折射环形线条",
+        "key_objects": ["放大气体单分子", "蓝光粒子束", "折射环形线条"],
+        "action_verbs": ["推镜聚焦", "高速撞击", "弹散波纹"],
+        "object_actions": [
+          "镜头：向前微推聚焦于上镜尾帧的单个微粒",
+          "蓝光粒子束：精准撞击放大微粒核心",
+          "折射环形线条：向外层层弹出波纹与能量散落"
+        ],
+        "assembly_sequence": ["推镜锁住中央微粒", "蓝光束射入撞击", "环形折射波纹弹出"],
         "motion_description": "镜头从镜头1尾帧缓速向前推镜拉近；蓝色小球撞击放大微粒，弹出四周高亮波纹与能量散落动画"
       },
       "keyframe_prompts": {
@@ -177,15 +200,15 @@ Agent 遵循以下严格顺序确定当前项目的视觉与运动风格规范�
         "image_prompt_zh": "Vox解说风格完成态关键帧（分镜2）：微粒四周散射出高亮蓝光折射环..."
       },
       "motion_plan": {
-        "motion_prompt": "12fps stop-motion zoom-in assembly. Beat 1 (0-2s): Zoom in on single particle; Beat 2 (2-5s): Rays shatter into ambient blue glow...",
-        "motion_prompt_zh": "12fps定格推镜组装。节拍1 (0-2s): 特写微粒；节拍2 (2-5s): 光线爆散为蓝色环境弥散光...",
+        "motion_prompt": "12fps stop-motion zoom-in assembly. Beat 1 (0-2s): Zoom in on single particle; Beat 2 (2-5.28s): Rays shatter into ambient blue glow...",
+        "motion_prompt_zh": "12fps定格推镜组装。节拍1 (0-2s): 特写微粒；节拍2 (2-5.28s): 光线爆散为蓝色环境弥散光...",
         "multi_beats": [
           { "beat": 1, "timing": "0-2.0s", "action": "Zoom in on single particle from shot #1 end frame" },
-          { "beat": 2, "timing": "2.0-5.0s", "action": "Rays explode into blue ambient light" }
+          { "beat": 2, "timing": "2.0-5.28s", "action": "Rays explode into blue ambient light" }
         ],
         "transition_in": "none",
         "transition_out": "none",
-        "estimated_duration_sec": 5.0
+        "estimated_duration_sec": 5.28
       }
     }
   ]
@@ -194,19 +217,25 @@ Agent 遵循以下严格顺序确定当前项目的视觉与运动风格规范�
 
 ---
 
+## 🔍 SubAgent 编导契约审核规程 (Phase 1 SubAgent Review)
+
+在 `storyboard.json` 落地后，**必须调起 SubAgent** 对编导产物严格依照 [validation-rules.md](validation-rules.md#编导阶段校验规则-phase-1-director-rules) 进行契约巡检（包含 Schema 完整性、18.375s 单镜上限、字幕标点剥离、提示词自包含与中英双语对译、连续镜头引用合法性及视觉语义三要素完整性）。
+
 - Agent 需向用户**全量呈报编导方案中 `storyboard.json` 的所有关键信息**，包含：
   1. **全局元信息 (`meta`)**：核心观点、叙事逻辑、情绪弧线、选定风格、转场模式及**事实核查依据 (`fact_check_notes`)**。
   2. **分镜完整结构 (`shots`)**：
      - 镜头 ID、目的、情绪、口播台词与**字幕短语拆解 (`caption_phrases`)**。
-     - **视觉寓意与逻辑推导 (`metaphor_meaning`)**。
-     - **具体画面元素明细 (`elements_detail`)**。
+     - **一句话视觉命题 (`visual_proposition`)** 与 **视觉寓意/逻辑推导 (`metaphor_meaning`)**。
+     - **3–6 个核心物件 (`key_objects`)** 与 **核心动作动词 (`action_verbs`)**。
+     - **物件动作与逻辑映射说明 (`object_actions`)** 与 **组装落位顺序 (`assembly_sequence`)**。
      - **整体分镜动画效果与运动轨迹说明 (`motion_description`)**。
      - **生图 Prompt (`first_frame_prompt`, `image_prompt`)（必须附带中文对译）**。
      - **运动与多节拍计划 (`motion_prompt`, `multi_beats`, `estimated_duration_sec`, 转场)**。
-- 呈报后 Agent **必须暂停流程（不得发起下一轮 Tool Call）**，等待用户审核确认。
+- SubAgent 审核通过并向用户呈报后，Agent **必须暂停流程（不得发起下一轮 Tool Call）**，等待用户审核确认。
 - 仅在收到用户明确确认或修改反馈后，方可进入 Phase 2 视觉样帧生成流程。
 
 ---
 
 ## ⚠️ 解耦逻辑
 该文件为后续所有阶段（视觉、运动、声音）的唯一上游标准。若修改台词或分镜分配，仅更新此文件对应字段。
+

@@ -24,18 +24,12 @@
 1. **仅生成 Shot #1 单镜样板关键帧 (Pilot Keyframe Generation)**：
    - 严禁一次性全量调用生图模型生成全部分镜图片！**必须且仅能调用 1 次生图工具渲染 Shot #1 的关键帧样板**（如 `shot_01.png`）。
    - **原生 16:9 比例生成硬要求**：生图 Prompt 头部必须携带 `--ar 16:9 widescreen 16:9 horizontal landscape aspect ratio` 指令，要求 AI 生图模型直接原生输出 16:9 构图，严禁生成 1:1 正方形图片后再做二次切头切尾裁剪导致视觉元素缺失。
-2. **SubAgent 视觉盲审 (SubAgent Check)**：
-   - 对关键帧图调起 SubAgent 专门检查以下 5 项指标：
-     - 🎯 **视觉隐喻隐晦度与清晰度**：隐喻符号是否直观、易懂。
-     - 👤 **人物一致性与变形**：是否存在人体结构变质、多头多手等生成缺陷。
-     - 🔤 **文字纯净度**：画面中是否存在 AI 乱码/假字 (Gibberish text)。
-     - 🎨 **风格系统统一性**：色彩、材质、光影是否符合选定 Style 规范。
-     - 📐 **首尾帧锚点对齐度 (`first_last_consistency`)**：在 `distinct-first-end` 策略下，首帧与尾帧的背景底色、机位角度与基础构图框架必须严格保持一致，严禁首帧包含额外大边框/异构组件导致过渡动画闪烁。
+2. **SubAgent 视觉盲审与动作逻辑核验 (SubAgent Check)**：
+   - 调起 SubAgent 严格依照 [validation-rules.md](validation-rules.md#3-subagent-静态视觉盲审-8-项指标-visual-quality-metrics) 验证镜头 100% 覆盖率、图像物理落地性，并评估 8 项静态视觉指标。
 3. **样板确认门控 (Keyframe Pilot Gate)**：
-   - 将 SubAgent 盲审通过的 **Shot #1 样板图**及盲审报告呈交用户做**人工确认**。在 `human-gated` 模式下，呈报后**必须暂停流程（不得发起下一轮 Tool Call）**。
+   - 将 SubAgent 盲审通过的 **Shot #1 样板图**及审查报告（依照 [validation-rules.md](validation-rules.md#3-subagent-静态视觉盲审-8-项指标-visual-quality-metrics) 规范呈报）提交用户做**人工确认**。在 `human-gated` 模式下，呈报后**必须暂停流程（不得发起下一轮 Tool Call）**。
 4. **全量批量生成 (Bulk Keyframe Generation)**：
    - **仅在用户明确回复“确认通过”样板图后**，方可批量调用生图模型生成 Shot #2 ~ Shot #N 的全量静态关键帧资产与首末帧控制图。
-   - **网格联系单本地合成规则**：全量静帧生成完毕后，**必须统一调用 `python3 video_builder.py contact-sheet <output_sheet.jpg> <img1> <img2>...` 脚本在本地无损拼接生成 `contact_sheet.jpg`，严禁调用 AI 生图模型！防范额外浪费生图配额。**
    - 导出并更新 `visual_spec.json`。
 
 ### `visual_spec.json` 契约范例：
@@ -60,12 +54,15 @@
       "keyframe_file": "keyframes/shot_01.png",
       "first_frame_file": "keyframes/shot_01_first.png",
       "last_frame_file": "keyframes/shot_01_last.png",
-      "elements": ["sun", "atmosphere", "light_rays"],
       "subagent_review": {
         "metaphor_clear": true,
         "no_character_distortion": true,
         "no_gibberish_text": true,
-        "style_unified": true
+        "style_unified": true,
+        "first_last_anchor_alignment": true,
+        "key_objects_complete": true,
+        "object_positions_logical": true,
+        "animation_plan_compliant": true
       },
       "prompt_used": "Vox style paper collage animation, black and white halftone character cutout, vibrant colored paper shapes, 8k resolution"
     }
@@ -76,6 +73,12 @@
 ### 🤖 生图大模型声明式接入与 CLI 驱动规范 (Image Provider Architecture)
 
 Phase 2 关键帧生成由 Skill 内部脚本 `scripts/generate_image.py` 结合项目根目录生图模型配置库 `providers/image/` 声明式驱动：
+
+- **规则 1：统一画风主描述词（Mandatory Style Prefix）**
+  每镜提示词头部必须强制包含：`editorial stop-motion paper collage, flat solid colored background HEX #F4F1EA, black-and-white halftone photographic cut-outs, selective colored cardstock, crisp warm-cream paper keylines #FFFDF7, soft low-opacity physical drop shadows`。
+
+- **规则 2：显式硬否定限制（Mandatory Anti-Glow Negative Prompt）**
+  尾部必须强制注入否定限制：`Negative constraints: no cropping, no black bars, no letterbox, no borders, no solid black subtitle rectangle, no readable text, no glossy 3D, no neon glow, no volumetric light, no digital lens flare, no fluid morphing, no motion blur`。
 
 - **单环境变量与 CLI 配置参数 (`IMAGE_PROVIDER_CONFIG`)**：
   - 系统优先读取环境变量 `IMAGE_PROVIDER_CONFIG` 或 CLI 参数 `-c / --provider_config <name_or_path>`；

@@ -96,7 +96,7 @@ Avoid: no typography, no readable letters, no numerals, no logos, no watermark, 
   `Inherit exact background scene elements, character appearance, object scale, color palette and camera framing from Shot #{N-1} end frame (reference image ImagePaths[0]); keep all static shared elements 100% identical and frozen.`
 
 ### 双语对译与连续继承契约 (Dual Language & Continuity Protocol)
-- **双语字段硬绑定**：`storyboard.json` 中所有英文提示词必须附带对应的 `*_zh` 中文对译字段（如 `first_frame_prompt_zh`, `image_prompt_zh`, `motion_prompt_zh`），专供人类审计与审阅。
+- **双语全量对译硬绑定**：`storyboard.json` 中所有英文提示词必须附带对应的 `*_zh` 中文对译字段（如 `first_frame_prompt_zh`, `image_prompt_zh`, `motion_prompt_zh`），专供人类审计与审阅。**中文对译必须保留英文 Prompt 的全部内容与段落结构细节**（包含画幅、背景 HEX、组件列表、继承锚点、负向排除等），严禁缩简为一句话总结。
 - **连续分镜继承（Continuous Shot Continuity）**：当分镜 N 承接分镜 N-1 时，标记 `"refer_previous_end_frame": true` 与 `"reference_shot_id": N-1`，保持主体形象、空间关系与色彩基调前后贯通。
 
 ---

@@ -3,7 +3,7 @@
   "create_url": "https://apihub.agnes-ai.com/v1/videos",
   "method": "POST",
   "headers": {
-    "Authorization": "Bearer sk-nKZVQn6ekY6bZyaEQ2pokPdbwXWzFeIu5SRkVEaAAyMQSiBp",
+    "Authorization": "Bearer xxx",
     "Content-Type": "application/json"
   },
   "payload_template": {
@@ -26,7 +26,7 @@
   "response_task_id_path": "video_id",
   "poll_url_template": "https://apihub.agnes-ai.com/agnesapi?video_id=${VIDEO_ID}",
   "poll_headers": {
-    "Authorization": "Bearer sk-nKZVQn6ekY6bZyaEQ2pokPdbwXWzFeIu5SRkVEaAAyMQSiBp"
+    "Authorization": "Bearer xxx"
   },
   "poll_status_path": "status",
   "poll_completed_value": "completed",

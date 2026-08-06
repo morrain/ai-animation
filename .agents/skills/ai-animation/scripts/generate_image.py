@@ -142,7 +142,7 @@ def generate_shot_keyframes(project_dir, shot_id=1, provider_config=None, genera
     return True
 
 def generate_all_keyframes(project_dir, provider_config=None):
-    """批量渲染所有分镜的关键帧"""
+    """批量渲染所有分镜的关键帧（跳过已在审核阶段生成的第一个分镜）"""
     sb_path = os.path.join(project_dir, "01-director", "storyboard.json")
     if not os.path.exists(sb_path):
         print(f"❌ 找不到 storyboard.json 编导方案: {sb_path}")
@@ -152,10 +152,13 @@ def generate_all_keyframes(project_dir, provider_config=None):
         sb = json.load(f)
 
     shots = sb.get("shots", [])
-    print(f"🚀 开始全量批量生成 {len(shots)} 个分镜的静态关键帧...")
+    print(f"🚀 开始批量生成分镜静态关键帧（从第 2 个分镜开始，共 {len(shots)} 个分镜）...")
 
     for shot in shots:
         sid = shot["shot_id"]
+        if sid == 1:
+            print(f"  ⏭️ [跳过]: 镜头 #01 已在审核阶段生成，无需重复渲染。")
+            continue
         ok = generate_shot_keyframes(project_dir, shot_id=sid, provider_config=provider_config, generate_both_frames=True)
         if not ok:
             print(f"💥 镜头 #{sid:02d} 生成失败，中止调度。")
