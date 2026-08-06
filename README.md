@@ -19,16 +19,15 @@
 
 ### 🎥 示例项目：《天空为什么是蓝色的？》
 
-采用 **Vox 纸拼贴风格 (vox)** 制作的科普短动画成片展示：
+采用 **Vox 纸拼贴风格 (vox)** 制作的科普短动画成片 Web 动态展示：
 
 <div align="center">
 
-<video src="./why-is-the-sky-blue/output/final.mp4" poster="./why-is-the-sky-blue/02-visual/contact_sheet.jpg" controls width="100%" style="max-width: 800px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-  您的浏览器不支持在线播放 MP4 视频。
-</video>
+![成片动画展示](./why-is-the-sky-blue/output/demo.gif)
 
 <p>
-  🎬 <a href="./why-is-the-sky-blue/output/final.mp4"><b>点击直接播放 / 下载 final.mp4 视频成片 (6.2MB)</b></a>
+  🎬 <a href="./why-is-the-sky-blue/output/final.mp4"><b>下载/播放带旁白音轨的完整 final.mp4 视频成片 (6.2MB)</b></a> • 
+  🎞️ <a href="./why-is-the-sky-blue/output/demo.webp"><b>WebP 格式矢量动画 (6.8MB)</b></a>
 </p>
 
 </div>
