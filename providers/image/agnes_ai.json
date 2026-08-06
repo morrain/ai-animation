@@ -1,0 +1,31 @@
+{
+  "provider_name": "agnes-ai",
+  "create_url": "https://apihub.agnes-ai.com/v1/images/generations",
+  "method": "POST",
+  "headers": {
+    "Authorization": "Bearer sk-nKZVQn6ekY6bZyaEQ2pokPdbwXWzFeIu5SRkVEaAAyMQSiBp",
+    "Content-Type": "application/json"
+  },
+  "payload_template": {
+    "model": "agnes-image-2.1-flash",
+    "prompt": "${PROMPT}",
+    "size": "2K",
+    "ratio": "16:9",
+    "extra_body": {
+      "response_format": "url"
+    }
+  },
+  "img2img_payload_template": {
+    "model": "agnes-image-2.1-flash",
+    "prompt": "${PROMPT}",
+    "size": "1024x768",
+    "extra_body": {
+      "image": [
+        "${REF_IMAGE_URL}"
+      ],
+      "response_format": "url"
+    }
+  },
+  "async_poll": false,
+  "response_image_url_path": "data.0.url"
+}

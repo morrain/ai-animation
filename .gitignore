@@ -1,0 +1,15 @@
+# Python bytecode & cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# OS store files
+.DS_Store
+Thumbs.db
+
+# Virtual Environment & Node
+node_modules/
+venv/
+.venv/

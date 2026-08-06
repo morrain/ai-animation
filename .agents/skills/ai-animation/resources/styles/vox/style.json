@@ -1,0 +1,41 @@
+{
+  "id": "vox",
+  "name": "Vox 纸拼贴科普风格",
+  "version": "2.0",
+  "description": "强烈平坦的纯色纸面色场 + 黑白半调照片剪贴骨架 + 彩色卡纸信息层级 + 暖奶油白 Keyline 描边与柔和纸片阴影。适合抽象概念、经济机制、认知偏差与观点解析。",
+  "visual": {
+    "palette": {
+      "background_neutral": "#F4F1EA",
+      "semantic_presets": {
+        "urgency_labor": "#E63946",
+        "warning_tools": "#E9C46A",
+        "system_repair": "#2A9D8F",
+        "memory_reflection": "#4A4E69",
+        "collaboration": "#264653",
+        "structure": "#FFFDF7"
+      },
+      "keyline": "#FFFDF7"
+    },
+    "signatures": {
+      "character": "black_and_white_halftone_cutout",
+      "paper_texture": "uncoated_fine_paper_fiber",
+      "shadow": "low_opacity_directional_soft_paper_shadow",
+      "keyline": "warm_cream_white_keyline",
+      "composition": "horizontal_16_9_poster_locked",
+      "bottom_safe_zone": "15-18% subtitle clearance"
+    },
+    "texture": "paper_grain_and_halftone",
+    "element_style": "editorial_paper_collage",
+    "prompt_postfix": "premium editorial stop-motion paper collage, black-and-white halftone photographic cut-outs, selective colored cardstock, crisp warm-cream paper keylines, soft low-opacity physical drop shadows, generous clean color-field negative space, zero typography, zero readable text, 8k resolution"
+  },
+  "motion": {
+    "fps": 12,
+    "motion_type": "content_to_completed_keyframes",
+    "easing": "steps(4, end)",
+    "amplitude": "snappy_item_assembly"
+  },
+  "audio": {
+    "suggested_voice": "zh-CN-YunxiNeural",
+    "bgm_genre": "rhythmic_percussion_lofi"
+  }
+}

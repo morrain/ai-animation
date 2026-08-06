@@ -1,0 +1,36 @@
+{
+  "provider_name": "agnes-ai",
+  "create_url": "https://apihub.agnes-ai.com/v1/videos",
+  "method": "POST",
+  "headers": {
+    "Authorization": "Bearer sk-nKZVQn6ekY6bZyaEQ2pokPdbwXWzFeIu5SRkVEaAAyMQSiBp",
+    "Content-Type": "application/json"
+  },
+  "payload_template": {
+    "model": "agnes-video-v2.0",
+    "prompt": "${PROMPT}",
+    "mode": "keyframes",
+    "width": 1280,
+    "height": 720,
+    "num_frames": 121,
+    "frame_rate": 24,
+    "extra_body": {
+      "image": [
+        "${FIRST_FRAME_URL}",
+        "${LAST_FRAME_URL}"
+      ],
+      "mode": "keyframes"
+    }
+  },
+  "async_poll": true,
+  "response_task_id_path": "video_id",
+  "poll_url_template": "https://apihub.agnes-ai.com/agnesapi?video_id=${VIDEO_ID}",
+  "poll_headers": {
+    "Authorization": "Bearer sk-nKZVQn6ekY6bZyaEQ2pokPdbwXWzFeIu5SRkVEaAAyMQSiBp"
+  },
+  "poll_status_path": "status",
+  "poll_completed_value": "completed",
+  "poll_video_url_path": "url",
+  "max_poll_attempts": 120,
+  "poll_interval_sec": 5
+}

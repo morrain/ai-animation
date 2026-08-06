@@ -1,0 +1,12 @@
+{
+  "name": "ai-animation-hyperframes-template",
+  "version": "1.0.0",
+  "description": "HyperFrames Web 动效渲染场景模版工程 (支持撕纸转场与逐字高效卡点字幕)",
+  "scripts": {
+    "render": "node render.js"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "id": "storybook",
+  "name": "Storybook 彩色纸雕绘本风格",
+  "version": "1.0",
+  "keyframe_strategy": "shared-hero-frame",
+  "motion_strategy": "same-frame-breathing-keyframes",
+  "description": "温暖手作纸雕舞台、贴纸造型人物与低频呼吸运动。适合生活化场景、心理社科与儿童认知科普。",
+  "visual": {
+    "palette": {
+      "background_cream": "#FFF9EE",
+      "primary_warm_yellow": "#F4A261",
+      "brick_red": "#E76F51",
+      "soft_teal": "#2A9D8F",
+      "olive_green": "#6B705C",
+      "keyline": "#FFFDF7"
+    },
+    "signatures": {
+      "character": "friendly_cut_paper_sticker",
+      "background": "layered_papercraft_miniature_stage",
+      "keyline": "warm_off_white_sticker_outline",
+      "shadow": "soft_low_opacity_physical_paper_shadow",
+      "composition": "eye_level_storybook_diorama",
+      "bottom_safe_zone": "15-18% subtitle clearance"
+    },
+    "texture": "papercut_layered_shadow_and_fine_fiber",
+    "element_style": "handcrafted_papercut_storybook",
+    "prompt_postfix": "Warm tactile layered cut-paper storybook diorama style, friendly cutout sticker characters with warm off-white outlines, layered paper background forming a miniature stage, visible fine paper fibers, soft physical paper shadows, gentle subdued pastel colors, 16:9 storybook framing, zero readable text, 8k resolution"
+  },
+  "motion": {
+    "fps": 30,
+    "motion_type": "same_frame_breathing_float",
+    "easing": "easeInOutSine",
+    "amplitude": "gentle_low_frequency_ambient"
+  },
+  "audio": {
+    "suggested_voice": "zh-CN-XiaoxiaoNeural",
+    "bgm_genre": "music_box_lullaby_acoustic"
+  }
+}

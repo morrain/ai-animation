@@ -1,0 +1,2 @@
+# scripts directory
+This directory stores helper scripts (e.g. TTS generators, audio alignment, FFmpeg/Remotion builders).

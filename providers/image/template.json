@@ -1,0 +1,24 @@
+{
+  "provider_name": "my_custom_image_model",
+  "create_url": "https://api.your-platform.com/v1/images/generations",
+  "method": "POST",
+  "headers": {
+    "Authorization": "Bearer ${MY_CUSTOM_API_KEY}",
+    "Content-Type": "application/json"
+  },
+  "payload_template": {
+    "model": "my-image-model-v1",
+    "prompt": "${PROMPT}",
+    "width": 1280,
+    "height": 720
+  },
+  "img2img_payload_template": {
+    "model": "my-image-model-v1",
+    "prompt": "${PROMPT}",
+    "init_image": "${REF_IMAGE_BASE64}",
+    "width": 1280,
+    "height": 720
+  },
+  "async_poll": false,
+  "response_image_url_path": "data.0.url"
+}

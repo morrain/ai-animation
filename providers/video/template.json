@@ -1,0 +1,28 @@
+{
+  "provider_name": "my_custom_video_model",
+  "create_url": "https://api.your-platform.com/v1/video/generations",
+  "method": "POST",
+  "headers": {
+    "Authorization": "Bearer ${MY_CUSTOM_API_KEY}",
+    "Content-Type": "application/json"
+  },
+  "payload_template": {
+    "model": "my-video-model-v1",
+    "prompt": "${PROMPT}",
+    "first_frame_image": "${FIRST_FRAME_BASE64}",
+    "last_frame_image": "${LAST_FRAME_BASE64}",
+    "duration_sec": "${DURATION}",
+    "fps": "${FPS}"
+  },
+  "async_poll": true,
+  "response_task_id_path": "data.task_id",
+  "poll_url_template": "https://api.your-platform.com/v1/video/tasks/${TASK_ID}",
+  "poll_headers": {
+    "Authorization": "Bearer ${MY_CUSTOM_API_KEY}"
+  },
+  "poll_status_path": "data.status",
+  "poll_completed_value": "SUCCEEDED",
+  "poll_video_url_path": "data.output_url",
+  "max_poll_attempts": 120,
+  "poll_interval_sec": 5
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AnimationStyleSchema",
+  "type": "object",
+  "required": ["id", "name", "description", "visual", "motion", "audio"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "description": { "type": "string" },
+    "visual": {
+      "type": "object",
+      "required": ["palette", "texture", "element_style", "prompt_postfix"],
+      "properties": {
+        "palette": {
+          "type": "object",
+          "properties": {
+            "background": { "type": "string" },
+            "primary": { "type": "string" },
+            "secondary": { "type": "string" },
+            "accent": { "type": "string" },
+            "text": { "type": "string" }
+          }
+        },
+        "texture": { "type": "string" },
+        "element_style": { "type": "string" },
+        "prompt_postfix": { "type": "string" }
+      }
+    },
+    "motion": {
+      "type": "object",
+      "required": ["fps", "motion_type", "easing"],
+      "properties": {
+        "fps": { "type": "integer" },
+        "motion_type": { "type": "string" },
+        "easing": { "type": "string" },
+        "amplitude": { "type": "string" }
+      }
+    },
+    "audio": {
+      "type": "object",
+      "required": ["suggested_voice", "bgm_genre"],
+      "properties": {
+        "suggested_voice": { "type": "string" },
+        "bgm_genre": { "type": "string" }
+      }
+    }
+  }
+}
