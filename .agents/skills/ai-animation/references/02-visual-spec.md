@@ -21,13 +21,15 @@
 
 在全量生成动画素材前，本阶段遵循两级审查机制：
 
-1. **仅生成 Shot #1 单镜样板关键帧 (Pilot Keyframe Generation)**：
-   - 严禁一次性全量调用生图模型生成全部分镜图片！**必须且仅能调用 1 次生图工具渲染 Shot #1 的关键帧样板**（如 `shot_01.png`）。
+1. **生成 Shot #1 首尾双帧样板关键帧 (Pilot Keyframe Generation)**：
+   - 严禁一次性全量调用生图模型生成全部分镜图片！在双帧控制模式（如 `vox` 风格）下，**必须同时生成 Shot #1 的首帧 (`shot_01_first.png`) 和尾帧 (`shot_01_last.png`)** 作为完整样板组（若为单帧模式则生成 Hero 帧）。
    - **原生 16:9 比例生成硬要求**：生图 Prompt 头部必须携带 `--ar 16:9 widescreen 16:9 horizontal landscape aspect ratio` 指令，要求 AI 生图模型直接原生输出 16:9 构图，严禁生成 1:1 正方形图片后再做二次切头切尾裁剪导致视觉元素缺失。
 2. **SubAgent 视觉盲审与动作逻辑核验 (SubAgent Check)**：
-   - 调起 SubAgent 严格依照 [validation-rules.md](validation-rules.md#3-subagent-静态视觉盲审-8-项指标-visual-quality-metrics) 验证镜头 100% 覆盖率、图像物理落地性，并评估 8 项静态视觉指标。
-3. **样板确认门控 (Keyframe Pilot Gate)**：
-   - 将 SubAgent 盲审通过的 **Shot #1 样板图**及审查报告（依照 [validation-rules.md](validation-rules.md#3-subagent-静态视觉盲审-8-项指标-visual-quality-metrics) 规范呈报）提交用户做**人工确认**。在 `human-gated` 模式下，呈报后**必须暂停流程（不得发起下一轮 Tool Call）**。
+   - 调起 SubAgent 严格依照 [validation-rules.md](validation-rules.md#3-subagent-静态视觉盲审-8-项指标-visual-quality-metrics) 验证镜头 100% 覆盖率、图像物理落地性，并对首尾两帧及两帧间的衔接进行 8 项静态视觉指标评估。
+3. **样板确认门控与重点突出汇报 (Keyframe Pilot Gate)**：
+   - 将 SubAgent 盲审通过的 **Shot #1 首尾双帧样板图对比**及审查报告提交用户做**人工确认**。
+   - **重点突出汇报要求**：汇报内容必须**重点突出展示首尾两帧之间的动画动作与过渡逻辑、视觉隐喻与科学含义、3–6 个核心物件的状态与空间位置变化**，便于用户清晰评估首末帧构图与运动可行性。
+   - 在 `human-gated` 模式下，呈报后**必须暂停流程（不得发起下一轮 Tool Call）**。
 4. **全量批量生成 (Bulk Keyframe Generation)**：
    - **仅在用户明确回复“确认通过”样板图后**，方可批量调用生图模型生成 Shot #2 ~ Shot #N 的全量静态关键帧资产与首末帧控制图。
    - 导出并更新 `visual_spec.json`。
