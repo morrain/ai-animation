@@ -18,6 +18,7 @@ venv/
 /*
 !/.agents/
 !/providers/
+!/assets/
 !/README.md
 !/LICENSE
 !/.gitignore

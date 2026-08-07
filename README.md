@@ -17,17 +17,17 @@
 
 ## 🍿 成片效果展示 (Showcase)
 
-### 🎥 示例项目：《天空为什么是蓝色的？》
+### 🎥 示例项目 1：《天空为什么是蓝色的？》 (`why-is-the-sky-blue`)
 
 采用 **Vox 纸拼贴风格 (vox)** 制作的科普短动画成片 Web 动态展示：
 
 <div align="center">
 
-![成片动画展示](./why-is-the-sky-blue/output/demo.gif)
+![天空偏偏是蓝色 - 成片动画展示](./assets/why-is-the-sky-blue-demo.gif)
 
 <p>
-  🎬 <a href="./why-is-the-sky-blue/output/final.mp4"><b>下载/播放带旁白音轨的完整 final.mp4 视频成片 (6.2MB)</b></a> • 
-  🎞️ <a href="./why-is-the-sky-blue/output/demo.webp"><b>WebP 格式矢量动画 (6.8MB)</b></a>
+  🎬 <a href="./assets/why-is-the-sky-blue-final.mp4"><b>下载/播放带旁白音轨的完整 final.mp4 视频成片 (6.0MB)</b></a> • 
+  🎞️ <a href="./assets/why-is-the-sky-blue-demo.webp"><b>WebP 格式矢量动画 (6.6MB)</b></a>
 </p>
 
 </div>
@@ -36,7 +36,28 @@
 
 以下为 Phase 2 生成的 **全镜头首尾关键帧拼图**，用于门控审查画面一致性与视觉构成：
 
-![Contact Sheet Preview](./why-is-the-sky-blue/02-visual/contact_sheet.jpg)
+![天空偏偏是蓝色 - Contact Sheet Preview](./assets/why-is-the-sky-blue-contact-sheet.jpg)
+
+---
+
+### 🎥 示例项目 2：《什么是肥尾效应？》 (`fat-tail-effect`)
+
+采用 **Vox 纸拼贴风格 (vox)** 与 30% 辅助音效双轨混音制作的风险与概率科普动画：
+
+<div align="center">
+
+![肥尾效应 - 成片动画展示](./assets/fat-tail-effect-demo.gif)
+
+<p>
+  🎬 <a href="./assets/fat-tail-effect-final.mp4"><b>下载/播放带旁白与辅助音效混音的 final.mp4 视频成片 (5.5MB)</b></a> • 
+  🎞️ <a href="./assets/fat-tail-effect-demo.webp"><b>WebP 格式矢量动画 (8.3MB)</b></a>
+</p>
+
+</div>
+
+#### 📸 视觉分镜面板 (Contact Sheet Preview)
+
+![肥尾效应 - Contact Sheet Preview](./assets/fat-tail-effect-contact-sheet.jpg)
 
 ---
 

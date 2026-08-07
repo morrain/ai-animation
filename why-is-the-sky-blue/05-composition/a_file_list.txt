@@ -1,4 +1,0 @@
-file '/Users/morrain/Documents/GitHub/ai-animation/why-is-the-sky-blue/04-audio/shots/shot_01.wav'
-file '/Users/morrain/Documents/GitHub/ai-animation/why-is-the-sky-blue/04-audio/shots/shot_02.wav'
-file '/Users/morrain/Documents/GitHub/ai-animation/why-is-the-sky-blue/04-audio/shots/shot_03.wav'
-file '/Users/morrain/Documents/GitHub/ai-animation/why-is-the-sky-blue/04-audio/shots/shot_04.wav'
