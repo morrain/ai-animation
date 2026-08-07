@@ -28,7 +28,7 @@
    - 调起 SubAgent 严格依照 [validation-rules.md](validation-rules.md#3-subagent-静态视觉盲审-8-项指标-visual-quality-metrics) 验证镜头 100% 覆盖率、图像物理落地性，并对首尾两帧及两帧间的衔接进行 8 项静态视觉指标评估。
 3. **样板确认门控与重点突出汇报 (Keyframe Pilot Gate)**：
    - 将 SubAgent 盲审通过的 **Shot #1 首尾双帧样板图对比**及审查报告提交用户做**人工确认**。
-   - **重点突出汇报要求**：汇报内容必须**重点突出展示首尾两帧之间的动画动作与过渡逻辑、视觉隐喻与科学含义、3–6 个核心物件的状态与空间位置变化**，便于用户清晰评估首末帧构图与运动可行性。
+   - **重点突出汇报要求**：汇报内容必须**重点突出展示首尾两帧之间的动画动作与过渡逻辑、视觉隐喻与科学含义、3–8 个核心物件的状态与空间位置变化**，便于用户清晰评估首末帧构图与运动可行性。
    - 在 `human-gated` 模式下，呈报后**必须暂停流程（不得发起下一轮 Tool Call）**。
 4. **全量批量生成 (Bulk Keyframe Generation)**：
    - **仅在用户明确回复“确认通过”样板图后**，方可使用 `run_command` 执行 `python3 .agents/skills/ai-animation/scripts/generate_image.py <project_dir> --all` 批量生成 Shot #2 ~ Shot #N 的全量静态关键帧资产与首末帧控制图。

@@ -58,7 +58,7 @@
 每镜**只表达一个**明确的因果关系：
 > **主体 A → 通过特定动作 → 改变主体 B → 展现可见结果**
 
-- **控制元素组数量**：单镜保持 **3–6 个大组合件**。一个“人群”“店铺链”或“信封序列”可作为一组，避免堆砌零散小碎片。
+- **控制元素组数量**：单镜保持 **3–8 个大组合件**。一个“人群”“店铺链”或“信封序列”可作为一组，避免堆砌零散小碎片。
 - **推荐隐喻符号**：
   - **容器**：储蓄罐、漏斗、透明档案盒
   - **连接**：管道、纸带、齿轮组、桥梁
@@ -81,7 +81,7 @@ Asset type: [initial/final] still frame for a 16:9 image-to-video B-roll clip
 Primary request: Create a finished editorial paper-collage image expressing [一句话视觉命题].
 Scene/backdrop: perfectly flat [背景颜色描述] paper field [HEX色号] with subtle uncoated paper fiber.
 Style/medium: premium editorial stop-motion paper collage; black-and-white halftone photographic cut-outs mixed with selective [点缀色彩] colored cardstock.
-Composition/framing: horizontal 16:9 locked poster frame; central subject within the middle 70 percent; generous clean color-field negative space; 3–6 large separable paper groups for later assemble-from-empty animation.
+Composition/framing: horizontal 16:9 locked poster frame; central subject within the middle 70 percent; generous clean color-field negative space; 3–8 large separable paper groups for later assemble-from-empty animation.
 Materials/textures: visible printed halftone dots, crisp machine-cut edges, thin warm-cream paper keylines, soft low-opacity physical drop shadows.
 Constraints: [本条隐喻必须一眼看懂的关系说明].
 Avoid: no typography, no readable letters, no numerals, no logos, no watermark, no UI, no subtitles, no glossy 3D, no photoreal environment, no clutter.

@@ -36,10 +36,10 @@ Agent 接收到原始素材后，**绝不直接凭空生成脚本**，必须严�
 2. **叙事逻辑与核心观点提炼 (Narrative Architecture)**：
    - 梳理知识演进线（抛出 Hook 悬念 -> 科学原理/反常冲突 -> 概念命名 -> 机制展开 -> 适用边界 -> 总结记忆句）。
 3. **视觉隐喻与运动效果设计 (Visual Metaphor & Motion Design)**：
-   - 绝不先想画面再强凑观点。严格执行编导提炼步骤：**①核心意思 -> ②情绪功能 -> ③一句话视觉命题 -> ④明确 3–6 个核心物件 (`key_objects`) -> ⑤核心动作动词 (`action_verbs`) -> ⑥物件动作与组装逻辑 (`object_actions` & `assembly_sequence`)**。
+   - 绝不先想画面再强凑观点。严格执行编导提炼步骤：**①核心意思 -> ②情绪功能 -> ③一句话视觉命题 -> ④明确 3–8 个核心物件 (`key_objects`) -> ⑤核心动作动词 (`action_verbs`) -> ⑥物件动作与组装逻辑 (`object_actions` & `assembly_sequence`)**。
    - 将抽象概念转化为具体的具象物体互动（如：将“经验重复消耗”设计为“剪刀在胶片时钟上切断”；将“瑞利散射”设计为“蓝光微粒撞击规则大气网格筛网向四周爆散”）。
 4. **分镜切分与转场规划 (Shot Breakdown & Transitions)**：
-   - 逐镜头拆解台词，为每一个单镜分配精准的视觉命题、3–6 个核心物件明细 (`key_objects`)、动作动词、物件动作逻辑映射、组装顺序、自包含 Prompt 与转场指令。
+   - 逐镜头拆解台词，为每一个单镜分配精准的视觉命题、3–8 个核心物件明细 (`key_objects`)、动作动词、物件动作逻辑映射、组装顺序、自包含 Prompt 与转场指令。
 
 ---
 
@@ -221,16 +221,16 @@ Agent 遵循以下严格顺序确定当前项目的视觉与运动风格规范�
 
 在 `storyboard.json` 落地后，**必须调起 SubAgent** 对编导产物严格依照 [validation-rules.md](validation-rules.md#编导阶段校验规则-phase-1-director-rules) 进行契约巡检（包含 Schema 完整性、18.375s 单镜上限、字幕标点剥离、提示词自包含与中英双语对译、连续镜头引用合法性及视觉语义三要素完整性）。
 
-- Agent 需向用户**全量呈报编导方案中 `storyboard.json` 的所有关键信息**，包含：
-  1. **全局元信息 (`meta`)**：核心观点、叙事逻辑、情绪弧线、选定风格、转场模式及**事实核查依据 (`fact_check_notes`)**。
-  2. **分镜完整结构 (`shots`)**：
-     - 镜头 ID、目的、情绪、口播台词与**字幕短语拆解 (`caption_phrases`)**。
-     - **一句话视觉命题 (`visual_proposition`)** 与 **视觉寓意/逻辑推导 (`metaphor_meaning`)**。
-     - **3–6 个核心物件 (`key_objects`)** 与 **核心动作动词 (`action_verbs`)**。
-     - **物件动作与逻辑映射说明 (`object_actions`)** 与 **组装落位顺序 (`assembly_sequence`)**。
-     - **整体分镜动画效果与运动轨迹说明 (`motion_description`)**。
-     - **生图 Prompt (`first_frame_prompt`, `image_prompt`)（必须附带中文对译）**。
-     - **运动与多节拍计划 (`motion_prompt`, `multi_beats`, `estimated_duration_sec`, 转场)**。
+- **编导门控精简汇报规范 (Streamlined Director Gate Protocol)**：
+  Agent 在向用户呈报 Director Gate 时，必须摒弃冗长的原始 Prompt 等底层技术细节，**采用精简清晰的结构重点汇报以下核心维度**：
+  1. **全局重点 (Global Overview)**：
+     - 💡 **核心观点 (Core Idea)**：科学原理或主题解说的核心论断。
+     - 🗺️ **叙事逻辑 (Narrative Architecture)**：分镜间的逻辑递进与起承转合结构。
+  2. **分镜精简清单 (Shot Core Details)**（建议采用表格或简洁列表）：
+     - 🗣️ **镜头 ID & 口播台词 (Shot ID & Narration)**
+     - 🧩 **3–8 个核心物件 (`key_objects`) & 核心动作动词 (`action_verbs`)**
+     - 🎯 **物件动作与逻辑映射说明 (`object_actions`)**：哪个物件执行什么动作，映射什么论证含义。
+     - 🎬 **整体分镜动画效果与运动轨迹说明 (`motion_description`)**：组件落位组装及运动轨迹效果。
 - SubAgent 审核通过并向用户呈报后，Agent **必须暂停流程（不得发起下一轮 Tool Call）**，等待用户审核确认。
 - 仅在收到用户明确确认或修改反馈后，方可进入 Phase 2 视觉样帧生成流程。
 
