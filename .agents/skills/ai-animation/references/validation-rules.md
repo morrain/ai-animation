@@ -40,6 +40,10 @@ SubAgent 在审查 `<topic_slug>/01-director/storyboard.json` 时，必须逐一
 - 检查 `motion_plan.motion_prompt`：针对首帧（`first_frame`）中已预渲染呈现的人物/主体，`motion_prompt` **必须包含主体姿态锁定向指令**（如 `remains standing upright, static and frozen in place; zero posture morphing, no rising from floor`）。
 - **严禁包含歧义动词**：严禁使用 `slides in from bottom`、`rises from ground` 等诱导模型生成“卧倒爬起”或“肢体扭曲”的描述。
 
+### 8. 单镜单动作与复合动作物理防范拆镜约束 (Single Action Per Shot Inspection)
+- 检查每个分镜的 `visual.object_actions` 与 `motion_plan.motion_prompt`：**必须严格保证单镜头对应单平面物理动作**（如仅有平移落位、仅有旋转、仅有印压或仅有爆散）。
+- **复合动作强行混杂阻断**：若 SubAgent 发现单镜头中包含跨越多个姿态改变或多重变轨的复合动作序列（如“物件平移入场，接着展开成结构B，最后爆散”），**必须判定审查不通过**，要求编导在动作拐点与自然语义处将其拆解为多个独立的单动作子镜头，确保 AI 图生视频（I2V）生成的可控性与顺滑度。
+
 ---
 
 ## 视觉阶段校验规则 (Phase 2: Visual Rules)

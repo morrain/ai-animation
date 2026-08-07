@@ -131,7 +131,7 @@ Skill 默认开启 **SubAgent 自动化审查 + 人工门控机制**：
 
 1. **[编导阶段 (Director)](references/01-director-spec.md)**
    - **输入**：用户原始资料/想法/主题。
-   - **核心约束**：**一镜只讲一个意思（一镜头推导一因果）**；画面无字幕亦可看懂；Prompt 必须按选定 Style 的 `prompt_template.md` 强制落地 **5 段式结构**（包含 HEX 色号、画幅锁、字幕留白边界、材质白描边与负向排除）。
+   - **核心约束**：**一镜只讲一个意思（一镜头推导一因果）**；**单镜单动作原则 (Single Action Per Shot)**，复合动作必须拆分为独立子镜头，避免 AI 图生视频融化跳闪；画面无字幕亦可看懂；Prompt 必须按选定 Style 的 `prompt_template.md` 强制落地 **5 段式结构**（包含 HEX 色号、画幅锁、字幕留白边界、材质白描边与负向排除）。
    - **输出**：`<topic_slug>/01-director/storyboard.json`（包含核心观点、叙事逻辑、分镜台词、中英双语提示词、视觉隐喻与转场计划）。
 
 2. **[视觉阶段 (Visuals)](references/02-visual-spec.md)**
