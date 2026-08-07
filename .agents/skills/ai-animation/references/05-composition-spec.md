@@ -20,8 +20,9 @@
    - 优先加载并使用固定版本的“得意黑”字体；若本地或网络不可用，自动平滑回退为系统的黑体（macOS 苹方 / Windows 微软雅黑），并将最终选定的字体信息写入 `state/font-selection.json`。
 4. **单行无印字幕渲染**：
    - 字幕单行显示、无背景底框、白字黑描边，在真实语义停顿处无缝切换，不掩盖画面主体。
-
-5. **SubAgent 成片合轨与质量巡检 (Phase 5 SubAgent Review)**：
+5. **视频原音效混音模式 (SFX Audio Blend Mode)**：
+   - 默认开启单镜视频原音效提取，按视频与 WAV 时长比计算 `atempo` 变速拉伸，并做 15% 音量衰减（可通过 `--sfx-volume` 调节），通过 `amix` 与主 TTS 口播平滑双轨融合，增强视听真实感。
+6. **SubAgent 成片合轨与质量巡检 (Phase 5 SubAgent Review)**：
    - 成片导出后，必须调起 SubAgent 严格依照 [validation-rules.md](validation-rules.md#合成阶段校验规则-phase-5-composition-rules) 对 `master_timeline.json`、`subtitles.srt` 及 `output/final.mp4` 进行巡检，确保成片画面规格 (1280x720 24fps H.264)、音画时间线同步及音质无异常破音。
 
 ## 📤 中间产物与终产物

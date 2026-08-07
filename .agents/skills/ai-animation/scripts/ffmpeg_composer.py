@@ -66,8 +66,56 @@ def get_media_duration(file_path):
         pass
     return None
 
-def compose_via_ffmpeg(project_dir, output_mp4=None):
-    """FFmpeg 引擎实现 WAV 主时钟 setpts 动态拉伸对齐与全流烧录"""
+def check_node_environment():
+    """检测当前系统环境是否安装 Node.js >= 18"""
+    try:
+        res = subprocess.run(["node", "-v"], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True)
+        if res.returncode == 0:
+            version_str = res.stdout.strip().lstrip("v")
+            major_ver = int(version_str.split(".")[0])
+            return major_ver >= 18
+    except Exception:
+        pass
+    return False
+
+def has_audio_stream(file_path):
+    """检测音视频文件中是否存在音频流（使用 FFMPEG_BIN 防范 macOS 假 ffprobe stub 干扰）"""
+    if not file_path or not os.path.exists(file_path):
+        return False
+    try:
+        cmd = [FFMPEG_BIN, "-i", file_path]
+        res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        output = (res.stdout or "") + (res.stderr or "")
+        if "Audio:" in output:
+            return True
+    except Exception:
+        pass
+    try:
+        cmd = [FFPROBE_BIN, "-v", "error", "-select_streams", "a", "-show_entries", "stream=codec_type", "-of", "csv=p=0", file_path]
+        res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True)
+        txt = res.stdout.strip().lower()
+        if txt and txt != "ffprobe stub" and "audio" in txt:
+            return True
+    except Exception:
+        pass
+    return False
+
+def get_atempo_filter(tempo):
+    """生成 FFmpeg 动态 atempo 音频变速滤镜链（自动处理 [0.5, 2.0] 边界）"""
+    tempo = max(0.1, min(10.0, tempo))
+    filters = []
+    curr = tempo
+    while curr < 0.5:
+        filters.append("atempo=0.5")
+        curr /= 0.5
+    while curr > 2.0:
+        filters.append("atempo=2.0")
+        curr /= 2.0
+    filters.append(f"atempo={curr:.4f}")
+    return ",".join(filters)
+
+def compose_via_ffmpeg(project_dir, output_mp4=None, mix_sfx=True, sfx_volume=0.30):
+    """FFmpeg 引擎实现 WAV 主时钟 setpts 动态拉伸对齐与全流烧录，支持视频原音效混音模式"""
     if not output_mp4:
         output_mp4 = os.path.join(project_dir, "output", "final.mp4")
 
@@ -93,8 +141,11 @@ def compose_via_ffmpeg(project_dir, output_mp4=None):
 
     scaled_v_files = []
     wav_list_for_concat = []
+    sfx_list_for_concat = []
+    any_has_sfx = False
 
-    print(f"🎬 正在对 {len(mp4_files)} 个单镜视频进行 WAV 主时钟 setpts 速率重调与音视频分离合轨...")
+    sfx_status_str = f"开启 ({int(sfx_volume*100)}% 音量)" if mix_sfx else "关闭"
+    print(f"🎬 正在对 {len(mp4_files)} 个单镜视频进行 WAV 主时钟 setpts 速率重调与音视频合轨 (音效混音: {sfx_status_str})...")
 
     for mp4_path in mp4_files:
         base_name = os.path.basename(mp4_path)
@@ -151,6 +202,47 @@ def compose_via_ffmpeg(project_dir, output_mp4=None):
             print(f"❌ 镜头 #{shot_id_str} FFmpeg 速率重调失败！")
             return False
 
+        # 辅助 SFX 音轨处理
+        if mix_sfx:
+            sfx_out = os.path.join(comp_dir, f"sfx_shot_{shot_id_str}.wav")
+            target_dur = a_dur if (a_dur and a_dur > 0) else (v_dur if (v_dur and v_dur > 0) else 3.0)
+            if has_audio_stream(mp4_path):
+                tempo = (v_dur / a_dur) if (v_dur and a_dur and a_dur > 0 and v_dur > 0) else 1.0
+                atempo_filter = get_atempo_filter(tempo)
+                ff_sfx_cmd = [
+                    FFMPEG_BIN, "-y",
+                    "-i", mp4_path,
+                    "-filter_complex", f"[0:a]{atempo_filter},volume={sfx_volume:.4f}[a]",
+                    "-map", "[a]",
+                    "-t", f"{target_dur:.4f}",
+                    "-c:a", "pcm_s16le",
+                    sfx_out
+                ]
+                res_sfx = subprocess.call(ff_sfx_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                if res_sfx == 0 and os.path.exists(sfx_out) and os.path.getsize(sfx_out) > 1000:
+                    sfx_list_for_concat.append(sfx_out)
+                    any_has_sfx = True
+                else:
+                    ff_silent_cmd = [
+                        FFMPEG_BIN, "-y",
+                        "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo",
+                        "-t", f"{target_dur:.4f}",
+                        "-c:a", "pcm_s16le",
+                        sfx_out
+                    ]
+                    subprocess.call(ff_silent_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                    sfx_list_for_concat.append(sfx_out)
+            else:
+                ff_silent_cmd = [
+                    FFMPEG_BIN, "-y",
+                    "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo",
+                    "-t", f"{target_dur:.4f}",
+                    "-c:a", "pcm_s16le",
+                    sfx_out
+                ]
+                subprocess.call(ff_silent_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                sfx_list_for_concat.append(sfx_out)
+
     # 1. 拼合无声 Master 视频轨
     v_concat_list_path = os.path.join(comp_dir, "v_file_list.txt")
     with open(v_concat_list_path, "w", encoding="utf-8") as f:
@@ -181,6 +273,39 @@ def compose_via_ffmpeg(project_dir, output_mp4=None):
     ]
     subprocess.call(concat_a_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
+    # 3. 如果开启了辅助音效混音，拼合 SFX 轨并与 Master 口播音轨双轨融合
+    master_audio_final = master_a_path
+    if mix_sfx and any_has_sfx and len(sfx_list_for_concat) == len(wav_list_for_concat):
+        sfx_concat_list_path = os.path.join(comp_dir, "sfx_file_list.txt")
+        with open(sfx_concat_list_path, "w", encoding="utf-8") as f:
+            for s_path in sfx_list_for_concat:
+                f.write(f"file '{os.path.abspath(s_path)}'\n")
+
+        master_sfx_path = os.path.join(comp_dir, "master_sfx_track.wav")
+        concat_sfx_cmd = [
+            FFMPEG_BIN, "-y",
+            "-f", "concat", "-safe", "0", "-i", sfx_concat_list_path,
+            "-c:a", "pcm_s16le",
+            master_sfx_path
+        ]
+        subprocess.call(concat_sfx_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+        if os.path.exists(master_sfx_path) and os.path.getsize(master_sfx_path) > 1000:
+            master_mixed_a_path = os.path.join(comp_dir, "master_mixed_audio_track.wav")
+            mix_cmd = [
+                FFMPEG_BIN, "-y",
+                "-i", master_a_path,
+                "-i", master_sfx_path,
+                "-filter_complex", "[0:a][1:a]amix=inputs=2:duration=first:dropout_transition=2[a]",
+                "-map", "[a]",
+                "-c:a", "pcm_s16le",
+                master_mixed_a_path
+            ]
+            res_mix = subprocess.call(mix_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            if res_mix == 0 and os.path.exists(master_mixed_a_path):
+                master_audio_final = master_mixed_a_path
+                print(f"🔊 [音效混音]: 已将视频原背景音效 ({int(sfx_volume*100)}% 音量) 与口播主音轨平滑混合！")
+
     # 检查是否存在 subtitles.srt
     srt_path = os.path.join(comp_dir, "subtitles.srt")
     has_srt = os.path.exists(srt_path) and os.path.getsize(srt_path) > 0
@@ -192,7 +317,7 @@ def compose_via_ffmpeg(project_dir, output_mp4=None):
         final_cmd = [
             FFMPEG_BIN, "-y",
             "-i", master_v_path,
-            "-i", master_a_path,
+            "-i", master_audio_final,
             "-vf", f"subtitles='{srt_escaped}':force_style='FontSize=20,PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,BorderStyle=1,Outline=2,Alignment=2,MarginV=30'",
             "-map", "0:v",
             "-map", "1:a",
@@ -206,7 +331,7 @@ def compose_via_ffmpeg(project_dir, output_mp4=None):
         final_cmd = [
             FFMPEG_BIN, "-y",
             "-i", master_v_path,
-            "-i", master_a_path,
+            "-i", master_audio_final,
             "-map", "0:v",
             "-map", "1:a",
             "-c:v", "copy",
@@ -225,7 +350,7 @@ def compose_via_ffmpeg(project_dir, output_mp4=None):
         print("❌ 最终 FFmpeg 视频拼接合成失败！")
         return False
 
-def compose_via_hyperframes(project_dir, output_mp4=None):
+def compose_via_hyperframes(project_dir, output_mp4=None, mix_sfx=True, sfx_volume=0.30):
     """HyperFrames 引擎实现动效渲染导出"""
     if not output_mp4:
         output_mp4 = os.path.join(project_dir, "output", "final.mp4")
@@ -247,31 +372,43 @@ def compose_via_hyperframes(project_dir, output_mp4=None):
 
     print(f"📄 已成功导出时间轴配置文件: {timeline_path}")
     print("⚠️ 注意: 当前仍使用系统底层 FFmpeg 极速渲染管线完成最终成片导出...")
-    return compose_via_ffmpeg(project_dir, output_mp4)
+    return compose_via_ffmpeg(project_dir, output_mp4, mix_sfx=mix_sfx, sfx_volume=sfx_volume)
 
-def compose_master(project_dir, output_mp4=None, use_hyperframes=False):
+def compose_master(project_dir, output_mp4=None, use_hyperframes=False, mix_sfx=True, sfx_volume=0.30):
     """双引擎平滑路由选择"""
     if use_hyperframes:
         if check_node_environment():
-            return compose_via_hyperframes(project_dir, output_mp4)
+            return compose_via_hyperframes(project_dir, output_mp4, mix_sfx=mix_sfx, sfx_volume=sfx_volume)
         else:
             print("⚠️ [WARNING]: 已指定 --use-hyperframes，但未检测到 Node.js >= 18 环境！")
             print("⚠️ [FALLBACK]: 自动平滑降级至 FFmpeg 极速合轨引擎...")
-            return compose_via_ffmpeg(project_dir, output_mp4)
+            return compose_via_ffmpeg(project_dir, output_mp4, mix_sfx=mix_sfx, sfx_volume=sfx_volume)
     else:
-        return compose_via_ffmpeg(project_dir, output_mp4)
+        return compose_via_ffmpeg(project_dir, output_mp4, mix_sfx=mix_sfx, sfx_volume=sfx_volume)
 
 def main():
     if len(sys.argv) < 2:
-        print("用法: python3 ffmpeg_composer.py <project_dir> [output_mp4] [--use-hyperframes]")
-        print("例: python3 ffmpeg_composer.py 为什么天空偏偏是蓝色的")
+        print("用法: python3 ffmpeg_composer.py <project_dir> [output_mp4] [--use-hyperframes] [--no-sfx] [--sfx-volume 0.30]")
+        print("例: python3 ffmpeg_composer.py why-is-the-sky-blue --sfx-volume 0.30")
         sys.exit(1)
 
     project_dir = sys.argv[1]
-    output_mp4 = sys.argv[2] if len(sys.argv) >= 3 and not sys.argv[2].startswith("--") else None
+    output_mp4 = None
     use_hyperframes = "--use-hyperframes" in sys.argv
+    mix_sfx = "--no-sfx" not in sys.argv
+    sfx_volume = 0.30
 
-    ok = compose_master(project_dir, output_mp4, use_hyperframes)
+    for i in range(2, len(sys.argv)):
+        arg = sys.argv[i]
+        if not arg.startswith("--") and output_mp4 is None:
+            output_mp4 = arg
+        elif arg == "--sfx-volume" and i + 1 < len(sys.argv):
+            try:
+                sfx_volume = float(sys.argv[i+1])
+            except ValueError:
+                pass
+
+    ok = compose_master(project_dir, output_mp4, use_hyperframes=use_hyperframes, mix_sfx=mix_sfx, sfx_volume=sfx_volume)
     if not ok:
         sys.exit(1)
 
