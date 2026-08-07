@@ -13,3 +13,11 @@ Thumbs.db
 node_modules/
 venv/
 .venv/
+
+# Topic Workspaces / Generated Project Directories (topic_slug)
+/*
+!/.agents/
+!/providers/
+!/README.md
+!/LICENSE
+!/.gitignore
