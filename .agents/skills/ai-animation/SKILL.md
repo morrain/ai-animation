@@ -68,7 +68,8 @@ Skill 默认开启 **SubAgent 自动化审查 + 人工门控机制**：
 
 1. **编导方案门控 (Director Gate)**：Phase 1 编导方案生成后暂停，全量呈报 `storyboard.json` 的所有关键信息（包含核心观点、事实核查依据、台词字幕拆解、**一句话视觉命题 (`visual_proposition`)**、**3–6 个核心物件 (`key_objects`)**、**视觉寓意 (`metaphor_meaning`)**、**物件动作与因果表达逻辑 (`object_actions`)**、**组装落位顺序 (`assembly_sequence`)**、**整体分镜动画效果与运动说明 (`motion_description`)**、生图 Prompt **及全量中文完整对译 (`*_zh`)**、多节拍运动计划与预估时长），由用户全面审核确认。
 2. **静帧样板组 SubAgent 盲审与门控 (Keyframe Gate)**：
-   - 严禁一次性全量批量调用生图模型！在 Phase 2 开始时，**必须优先生成 Shot #1 的首尾双帧样板图 (`shot_01_first.png` 与 `shot_01_last.png`)**（若风格为单帧 Hero 模式则生成主帧），要求**首尾两帧同时参与审核与呈报**。
+   - 严禁调用内置 `generate_image` Tool 工具，所有生图任务必须通过 `run_command` 执行脚本 `python3 .agents/skills/ai-animation/scripts/generate_image.py <project_dir> [--shot_id N] [--all]`。
+   - 严禁一次性全量批量调用脚本生成全部分镜！在 Phase 2 开始时，**必须优先生成 Shot #1 的首尾双帧样板图 (`shot_01_first.png` 与 `shot_01_last.png`)**（若风格为单帧 Hero 模式则生成主帧），要求**首尾两帧同时参与审核与呈报**。
    - **SubAgent 盲审**：调起 SubAgent 严格依照 `references/validation-rules.md` 审核 Shot #1 首尾双帧的 8 项静态视觉指标（包含物理落地、隐喻清晰度、无变形假字、首尾锚点对齐及动作方案契合度等）。
    - **重点突出汇报与人工确认**：将 Shot #1 首尾样板图（首帧与尾帧对比）呈报给用户，并在汇报中**重点突出展现两帧之间的动画动作与过渡逻辑、视觉隐喻与科学含义、3–6 个核心物件的切入状态与位置变迁**。呈报后**停止后续 Tool Call 等待确认**。用户确认风格与画质满意后，方可批量生成 Shot #2~N 的全量静帧及首末帧控制图。
 3. **动画样片 SubAgent 动态审核与门控 (Motion Pilot Gate)**：
