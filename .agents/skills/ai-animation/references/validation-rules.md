@@ -62,7 +62,7 @@ SubAgent 在审查 `<topic_slug>/02-visual/` 产物时，必须逐一验证以�
 对于渲染出的关键帧图像（必须同时生成并审查 Shot #1 的首尾双帧 `shot_01_first.png` 与 `shot_01_last.png`），SubAgent 需进行以下盲审评估：
 1. 🎯 **视觉隐喻清晰度 (`metaphor_clear`)**：视觉符号直观易懂，能够独立传递科学或观点因果。
 2. 👤 **人物与主体无变形 (`no_character_distortion`)**：黑白半调人物肢体自然，无多头多手或结构变质。
-3. 🔤 **文字纯净度 (`no_gibberish_text`)**：画面背景与素材中绝无 AI 乱码假字或无意义拼写字母。
+3. 🔤 **文字纯净度 (`no_gibberish_text`)**：画面绝对无无意义 AI 乱码假字或伪拼写字母；允许并支持关键物件上呈现清晰精准的公式、符号、数字与矢量标签。
 4. 🎨 **视觉风格系统统一性 (`style_unified`)**：配色 HEX、纸纹材质、阴影与白描边严格契合当前选定的 Style。
 5. 📐 **首尾帧基准锚点对齐 (`first_last_anchor_alignment`)**：在双帧模式下，首帧与尾帧的场景构图框架与背景底色保持一致，无跳闪。
 6. 🧩 **关键物件完整性 (`key_objects_complete`)**：对照 `storyboard.json` 该分镜中 `key_objects` 声明的 3–8 个核心视觉物件/构件，检查静态帧画面是否完整包含所有关键物件，绝无遗漏缺失。

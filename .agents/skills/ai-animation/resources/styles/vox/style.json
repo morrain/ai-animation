@@ -26,7 +26,7 @@
     },
     "texture": "paper_grain_and_halftone",
     "element_style": "editorial_paper_collage",
-    "prompt_postfix": "premium editorial stop-motion paper collage, black-and-white halftone photographic cut-outs, selective colored cardstock, crisp warm-cream paper keylines, soft low-opacity physical drop shadows, generous clean color-field negative space, zero typography, zero readable text, 8k resolution"
+    "prompt_postfix": "premium editorial stop-motion paper collage, black-and-white halftone photographic cut-outs, selective colored cardstock, crisp warm-cream paper keylines, soft low-opacity physical drop shadows, generous clean color-field negative space, no AI gibberish text, no random distorted letters, 8k resolution"
   },
   "motion": {
     "fps": 12,

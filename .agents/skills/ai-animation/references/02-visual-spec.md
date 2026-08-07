@@ -80,7 +80,7 @@ Phase 2 关键帧生成由 Skill 内部脚本 `scripts/generate_image.py` 结合
   每镜提示词头部必须强制包含：`editorial stop-motion paper collage, flat solid colored background HEX #F4F1EA, black-and-white halftone photographic cut-outs, selective colored cardstock, crisp warm-cream paper keylines #FFFDF7, soft low-opacity physical drop shadows`。
 
 - **规则 2：显式硬否定限制（Mandatory Anti-Glow Negative Prompt）**
-  尾部必须强制注入否定限制：`Negative constraints: no cropping, no black bars, no letterbox, no borders, no solid black subtitle rectangle, no readable text, no glossy 3D, no neon glow, no volumetric light, no digital lens flare, no fluid morphing, no motion blur`。
+  尾部必须强制注入否定限制：`Negative constraints: no cropping, no black bars, no letterbox, no borders, no solid black subtitle rectangle, no AI gibberish text, no random unreadable letters, no glossy 3D, no neon glow, no volumetric light, no digital lens flare, no fluid morphing, no motion blur`。
 
 - **单环境变量与 CLI 配置参数 (`IMAGE_PROVIDER_CONFIG`)**：
   - 系统优先读取环境变量 `IMAGE_PROVIDER_CONFIG` 或 CLI 参数 `-c / --provider_config <name_or_path>`；

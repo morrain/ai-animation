@@ -65,7 +65,7 @@
   - **变化**：收窄、缩小、分叉、锁住、被光芒照亮
   - **循环**：轨轮、链条、闭合路径
   - **对照**：一个个体与一个网络、投入与结果
-- **禁止可读文字**：**画面内绝对不要生成包含字母、数字、标题或乱码印章**。所有文字仅在合成阶段的字幕层体现。
+- **防止 AI 乱码与杂乱大字 (No AI Gibberish & Fullscreen Captions)**：严禁无意义 AI 乱码假字 (gibberish text)、杂乱伪字符或背景标题画框。**允许且鼓励在关键物件上印刷清晰的科学公式（如 E=mc²）、单位符号（如 H₂O, kg）、精准数字标号（如 01, 100%）或矢量节点标签**。
 
 ---
 
@@ -84,7 +84,7 @@ Style/medium: premium editorial stop-motion paper collage; black-and-white halft
 Composition/framing: horizontal 16:9 locked poster frame; central subject within the middle 70 percent; generous clean color-field negative space; 3–8 large separable paper groups for later assemble-from-empty animation.
 Materials/textures: visible printed halftone dots, crisp machine-cut edges, thin warm-cream paper keylines, soft low-opacity physical drop shadows.
 Constraints: [本条隐喻必须一眼看懂的关系说明].
-Avoid: no typography, no readable letters, no numerals, no logos, no watermark, no UI, no subtitles, no glossy 3D, no photoreal environment, no clutter.
+Avoid: no AI gibberish text, no random unreadable letters, no random pseudo-symbols, no fullscreen title boxes, no logos, no watermark, no UI, no subtitles, no glossy 3D, no photoreal environment, no clutter.
 ```
 
 ### 锚点对齐与图生图参考继承 (Anchor Conditioning & Image-to-Image Protocol)

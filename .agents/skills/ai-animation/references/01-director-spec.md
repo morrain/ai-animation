@@ -13,8 +13,8 @@
 
 1. **一镜只讲一个意思 (One Shot, One Proposition)**：
    - 每一个镜头（Shot）只能承载并推导**一个独立的因果关系或逻辑命题**。若一句话包含两个独立因果、两个时空或两个结论，必须拆分为不同镜头；若两句话仅改写同一件事，必须合并为同一镜头。
-2. **无字幕依然直观可读 (Subtitles-Free Visual Readability)**：
-   - 视觉隐喻、组件关系与动作必须具备极强的独立叙事力，**即便关闭所有声音与字幕，观众仅看画面动作也能直观读懂因果推导**。画面内严禁生硬画入术语大字，严禁依靠字幕或画面打字来补全逻辑。
+2. **无字幕解说依然直观可读 (Subtitles-Free Visual Readability)**：
+   - 视觉隐喻、组件关系与动作必须具备极强的独立叙事力，**即便关闭所有声音与字幕，观众仅看画面动作也能直观读懂因果推导**。允许且鼓励在关键物件上印刷精准科学公式（如 `E=mc²`）、符号（如 `H₂O`）与数字标签，但严禁依靠背景硬画满屏解说大字或无意义乱码来补全逻辑。
 3. **单镜单动作与物理拆镜原则 (Single Action Per Shot / Atomic Motion Rule)**：
    - 为彻底防范 AI 图生视频（I2V）在处理多变轨、多几何变换时的变形、融化与跳闪乱动隐患，画面必须精细拆解为【**单镜单动作**】模式。每一个分镜只能包含**一个主导平面物理动作或单一物理态变**（如：仅平移落位、仅旋转切入、仅印压盖章或仅碰撞爆散）。
    - **复合动作强制拆镜**：若台词或科学逻辑包含复合动作序列（如“物件落位后，展开成结构，接着发射粒子”），编导在 Phase 1 **必须在动作拐点与自然语义停顿处将其精细拆解为多个独立子镜头**。
@@ -67,7 +67,7 @@ Agent 遵循以下严格顺序确定当前项目的视觉与运动风格规范�
      2. **视觉主体与隐喻 (`Subject & Visual Proposition`)**：渲染序列遵循“首帧优先渲染，尾帧继承首帧”原则。针对 `image_prompt` (尾帧)，必须同时显式保留选定风格的核心画风材质（如 `Vox style paper collage, cut-out paper shapes`），并声明 `Inherit exact background scene elements, character appearance, object scale, and camera framing from reference image ImagePaths[0]; keep all static shared elements 100% identical and frozen`。
      3. **构图与字幕避让 (`Composition & Subtitle Margin`)**：字幕避让是指将人脸、核心隐喻符号等焦点元素置于中上部区域避开底部字幕遮挡；背景及延伸场景可自然铺满整屏，严禁刻意挖空挖洞或写 clear for subtitles 以防模型画出黑色字幕框。
      4. **材质与 HEX 色号 (`Materials & Semantic Palette`)**：显式写入风格规范中的背景 HEX 色号（如 `#F4F1EA` / `#1D3557`）及点缀色 HEX 色号、白描边 Keyline 属性与切面阴影。
-     5. **负向硬排除 (`Negative Constraints`)**：必须包含 `no cropping, no black bars, no letterbox, no borders, no solid black subtitle rectangle, no readable text, no letters, no numbers, no logos, no glossy 3D, no neon glow, no volumetric light, no digital lens flare`，防止模型把光谱或彩虹生成为科技感三维发光/虚化光晕。
+     5. **负向硬排除 (`Negative Constraints`)**：必须包含 `no cropping, no black bars, no letterbox, no borders, no solid black subtitle rectangle, no AI gibberish text, no random unreadable letters, no logos, no glossy 3D, no neon glow, no volumetric light, no digital lens flare`，防止模型生成杂乱 AI 乱码假字或把光谱生成为科技感三维发光/虚化光晕。
    - **双语全量对译硬绑定**：在 `storyboard.json` 中，所有英文提示词字段必须附带对应的 `*_zh` 中文对译字段（如 `first_frame_prompt_zh`, `image_prompt_zh`, `motion_prompt_zh`），专供人类审计阅读。**中文对译绝不能仅写成 1–2 句简略摘要，必须完整保留英文 Prompt 的全部细节与段落结构**（包含资产画幅、视觉命题、场景背景、风格材质、HEX 色号、参考图继承锚点、负向硬排除以及运动节拍等），实现英文供模型生成、中文供人类审阅的 1:1 全量内容对等。
 5. **连续分镜视觉继承协议 (Continuous Shot Continuity Protocol)**：
    - **连续场景判定与标记**：在编导拆分分镜时，若判定当前分镜 N（如分镜 2）与前一分镜 N-1（如分镜 1）在视觉场景、人物、色彩或空间逻辑上是连续承接的，必须在 `storyboard.json` 镜头字段中显式标记连续性参数：`"refer_previous_end_frame": true` 与 `"reference_shot_id": N-1`。
