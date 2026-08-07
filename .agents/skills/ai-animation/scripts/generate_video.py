@@ -137,6 +137,27 @@ def generate_shot_video(project_dir, shot_id=1, provider_config=None):
 
     return success
 
+def generate_all_videos(project_dir, provider_config=None):
+    """全量批量生成所有分镜的动态视频（跳过已在审核阶段生成的第一个分镜）"""
+    storyboard_path = os.path.join(project_dir, "01-director", "storyboard.json")
+    if not os.path.exists(storyboard_path):
+        print(f"❌ [错误]: 找不到 {storyboard_path}")
+        return False
+    with open(storyboard_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    shots = data.get("shots", [])
+    print(f"🚀 开始全量批量生成分镜动态视频（从第 2 个分镜开始，共 {len(shots)} 个分镜）...")
+    all_ok = True
+    for s in shots:
+        sid = s["shot_id"]
+        if sid == 1:
+            print(f"  ⏭️ [跳过]: 镜头 #01 已在审核阶段生成，无需重复渲染。")
+            continue
+        ok = generate_shot_video(project_dir, shot_id=sid, provider_config=provider_config)
+        if not ok:
+            all_ok = False
+    return all_ok
+
 def main():
     parser = argparse.ArgumentParser(description="ai-animation Skill Phase 3 流程指挥官与资产调度引擎")
     parser.add_argument("project_dir", help="主题项目根目录路径 (如 why-is-the-sky-blue)")
@@ -147,20 +168,8 @@ def main():
     args = parser.parse_args()
 
     if args.all:
-        storyboard_path = os.path.join(args.project_dir, "01-director", "storyboard.json")
-        if not os.path.exists(storyboard_path):
-            print(f"❌ [错误]: 找不到 {storyboard_path}")
-            sys.exit(1)
-        with open(storyboard_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        shot_ids = [s["shot_id"] for s in data.get("shots", [])]
-        print(f"🚀 开始全量批量生成 {len(shot_ids)} 个镜头的动态视频...")
-        all_ok = True
-        for sid in shot_ids:
-            ok = generate_shot_video(args.project_dir, shot_id=sid, provider_config=args.provider_config)
-            if not ok:
-                all_ok = False
-        if not all_ok:
+        ok = generate_all_videos(args.project_dir, provider_config=args.provider_config)
+        if not ok:
             sys.exit(1)
     else:
         ok = generate_shot_video(args.project_dir, shot_id=args.shot_id, provider_config=args.provider_config)
