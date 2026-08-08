@@ -16,9 +16,10 @@
 2. **无字幕解说依然直观可读 (Subtitles-Free Visual Readability)**：
    - 视觉隐喻、组件关系与动作必须具备极强的独立叙事力，**即便关闭所有声音与字幕，观众仅看画面动作也能直观读懂因果推导**。允许且鼓励在关键物件上印刷精准科学公式（如 `E=mc²`）、符号（如 `H₂O`）与数字标签，但严禁依靠背景硬画满屏解说大字或无意义乱码来补全逻辑。
 3. **单镜单动作与物理拆镜原则 (Single Action Per Shot / Atomic Motion Rule)**：
-   - 为彻底防范 AI 图生视频（I2V）在处理多变轨、多几何变换时的变形、融化与跳闪乱动隐患，画面必须精细拆解为【**单镜单动作**】模式。每一个分镜只能包含**一个主导平面物理动作或单一物理态变**（如：仅平移落位、仅旋转切入、仅印压盖章或仅碰撞爆散）。
-   - **复合动作强制拆镜**：若台词或科学逻辑包含复合动作序列（如“物件落位后，展开成结构，接着发射粒子”），编导在 Phase 1 **必须在动作拐点与自然语义停顿处将其精细拆解为多个独立子镜头**。
-   - **镜头数量服从运动顺滑度 (Shot Count Serves Motion Feasibility)**：编导绝不能为了追求“少镜头”而强行把多个复合动作塞入一个单镜。镜头数量服从物理可控性，增加镜头数量完全合理且鼓励，只要台词总量、口播时长与科学因果逻辑 100% 保持完整。
+   - 为彻底防范 AI 图生视频（I2V）在处理多变轨、多几何变换时的变形、融化与跳闪乱动隐患，分镜必须精细拆解为【**单镜单动作**】模式。每一个分镜只能包含**一个主导平面物理动作或单一物理态变**（如：仅平移落位、仅旋转切入、仅印压盖章或仅碰撞爆散）。
+   - **复合动作强制拆镜自检规程 (Atomic Shot Pre-Creation Audit)**：Agent 在生成 `storyboard.json` 之前，必须对每个初步分镜执行【首尾帧态变单步检验】。若首帧至尾帧发生了**多于 1 种物理动效**（例如：白光向下延伸 + 彩虹纸带展开；或红光穿透 + 蓝光爆散），或者涉及**多于 1 个核心物件的独立动效**，必须强制在动作拐点处拆分为独立的连续子镜头。
+   - **动作动词归一约束 (Single Action Verb Constraint)**：每一个分镜的 `visual.action_verbs` 必须收敛至**有且仅有 1 个主导动作动词**（如 `["垂直延伸"]` 或 `["折射展开"]`）。严禁在一个镜头中填入多个不同动作的动词组合（如 `["平移入场", "折射展开"]`），包含 2 个及以上动作动词的初步分镜必须在 Phase 1 阶段由 Agent 自动拆分，严禁将复合动作推给人类门控或后续阶段。
+   - **禁止依赖 `multi_beats` 强行合镜**：`multi_beats` 只能用于表达单一平滑动作的时间轴调速节拍，严禁在一个分镜的 `multi_beats` 中写入两个不同动作动词。
 
 ---
 
@@ -64,15 +65,15 @@ Agent 遵循以下严格顺序确定当前项目的视觉与运动风格规范�
    - 编写 `keyframe_prompts` 与 `motion_plan.motion_prompt` 时，**严禁使用简短的 1-2 句自然语言描述**。
    - 必须基于加载的 `prompt_template.md`，强制按照以下 **5 段结构** 填充扩充英文 Prompt：
      1. **资产与画幅属性 (`Asset Type & Framing`)**：提示词开头必须包含 `--ar 16:9`，明确 `16:9 widescreen horizontal landscape aspect ratio`，要求模型原生直接输出 16:9 画面，严禁事后做二次切头切尾裁剪。
-     2. **视觉主体与隐喻 (`Subject & Visual Proposition`)**：渲染序列遵循“首帧优先渲染，尾帧继承首帧”原则。针对 `image_prompt` (尾帧)，必须同时显式保留选定风格的核心画风材质（如 `Vox style paper collage, cut-out paper shapes`），并声明 `Inherit exact background scene elements, character appearance, object scale, and camera framing from reference image ImagePaths[0]; keep all static shared elements 100% identical and frozen`。
+     2. **视觉主体与隐喻 (`Subject & Visual Proposition`)**：渲染序列遵循“首帧优先渲染，尾帧继承首帧”原则。针对图生图关键帧（如尾帧 `last_frame_prompt` 参考首帧），**严禁重复描绘大段全量背景（避免全量提示词导致生图偏差）**，提示词必须遵循**【图生图增量提示词法则 (Img2Img Delta Prompting Protocol)】**：开头声明继承参考图静态元素（如 `Reference Image Conditioning: Inherit exact background scene elements, character appearance, object scale, and camera framing from reference image ImagePaths[0]; keep all static shared elements 100% frozen`），后续**仅精确描述增量改变与具体的元件挪动及新状态**（如 `Delta changes: Move [object A] from [position 1] to [position 2], slide in [object B] at right.`）。
      3. **构图与字幕避让 (`Composition & Subtitle Margin`)**：字幕避让是指将人脸、核心隐喻符号等焦点元素置于中上部区域避开底部字幕遮挡；背景及延伸场景可自然铺满整屏，严禁刻意挖空挖洞或写 clear for subtitles 以防模型画出黑色字幕框。
-     4. **材质与 HEX 色号 (`Materials & Semantic Palette`)**：显式写入风格规范中的背景 HEX 色号（如 `#F4F1EA` / `#1D3557`）及点缀色 HEX 色号、白描边 Keyline 属性与切面阴影。
+     4. **材质与色彩描述 (`Materials & Color Description`)**：使用精确自然语言色彩描述（如 `cream beige`, `crimson red`, `deep ocean blue`），**严禁将 HEX 色号写入提示词文本**，防止大模型将色号误识别为需要渲染在画面上的文字标签。
      5. **负向硬排除 (`Negative Constraints`)**：必须包含 `no cropping, no black bars, no letterbox, no borders, no solid black subtitle rectangle, no AI gibberish text, no random unreadable letters, no logos, no glossy 3D, no neon glow, no volumetric light, no digital lens flare`，防止模型生成杂乱 AI 乱码假字或把光谱生成为科技感三维发光/虚化光晕。
-   - **双语全量对译硬绑定**：在 `storyboard.json` 中，所有英文提示词字段必须附带对应的 `*_zh` 中文对译字段（如 `first_frame_prompt_zh`, `image_prompt_zh`, `motion_prompt_zh`），专供人类审计阅读。**中文对译绝不能仅写成 1–2 句简略摘要，必须完整保留英文 Prompt 的全部细节与段落结构**（包含资产画幅、视觉命题、场景背景、风格材质、HEX 色号、参考图继承锚点、负向硬排除以及运动节拍等），实现英文供模型生成、中文供人类审阅的 1:1 全量内容对等。
+   - **双语全量对译硬绑定**：在 `storyboard.json` 中，所有英文提示词字段必须附带对应的 `*_zh` 中文对译字段（如 `first_frame_prompt_zh`, `last_frame_prompt_zh`, `motion_prompt_zh`），专供人类审计阅读。**中文对译绝不能仅写成 1–2 句简略摘要，必须完整保留英文 Prompt 的全部细节与段落结构**（包含资产画幅、视觉命题、场景背景、风格材质、HEX 色号、参考图继承锚点、负向硬排除以及运动节拍等），实现英文供模型生成、中文供人类审阅的 1:1 全量内容对等。
 5. **连续分镜视觉继承协议 (Continuous Shot Continuity Protocol)**：
    - **连续场景判定与标记**：在编导拆分分镜时，若判定当前分镜 N（如分镜 2）与前一分镜 N-1（如分镜 1）在视觉场景、人物、色彩或空间逻辑上是连续承接的，必须在 `storyboard.json` 镜头字段中显式标记连续性参数：`"refer_previous_end_frame": true` 与 `"reference_shot_id": N-1`。
-   - **首帧 Prompt 继承指令**：分镜 N 的 `first_frame_prompt` 头部必须显式声明继承前一镜头尾帧的背景与元素，写为：`Inherit exact background scene elements, character appearance, object scale, color palette and camera framing from Shot #{N-1} end frame (reference image ImagePaths[0]); keep all static shared elements 100% identical and frozen`。
-   - **中文 Prompt 同步对译**：对应的 `first_frame_prompt_zh` 也需显式写入：`继承分镜 #{N-1} 尾帧的背景场景、人物形象、色彩色板与构图视角，保持共有静态元素完全一致`。
+   - **首帧增量 Prompt 继承指令**：分镜 N 的 `first_frame_prompt` 遵循**增量提示词法则**，头部显式声明继承前一镜头尾帧的背景与元素（写为 `Inherit exact background scene elements, character appearance, object scale, color palette and camera framing from Shot #{N-1} end frame (reference image ImagePaths[0]); keep all static shared elements 100% frozen`），后续**仅精准描述该分镜相对于前一分镜的物理增量改变与元件位移**（如：`Delta changes: Move [object X] to center, and drop in [object Y].`）。
+   - **中文 Prompt 同步对译**：对应的 `first_frame_prompt_zh` 也需显式写入：`继承分镜 #{N-1} 尾帧的背景场景、人物形象与构图视角，增量移动/切入以下物件：[具体增量描述]`。
 6. **首尾帧演进范式 (Assemble-From-Empty Rule)**：
    - **尾帧是视觉真相**：尾帧 (`last_frame`) 必须完整表达隐喻，所有最终纸片元素、位置、比例和颜色均在尾帧确定。
    - **首帧为初始空场/基座态 (`Assemble-From-Empty`)**：首帧 (`first_frame`) 必须是冲突发生前或变化启动前的初始状态/空场背景（只保留必要的主体或环境框架，留出充足负空间），为后续纸片元素滑入落位提供运动空间。
@@ -81,6 +82,10 @@ Agent 遵循以下严格顺序确定当前项目的视觉与运动风格规范�
 7. **运动 Prompt 防误幻觉与预渲染姿态锁规范 (Motion Prompt Posture Lock Protocol)**：
     - **首帧在场主体姿态锁定**：在首帧 (`first_frame_prompt`) 中已预渲染落座/伫立的人物或主体，`motion_prompt` 必须显式声明其**保持初始直立姿态不动**（如 `the halftone cut-out person remains standing upright, static and frozen in place; zero posture morphing, no rising from floor`）。
     - **严禁使用动作歧义动词**：严禁使用 `slides in from bottom`（易被模型误理解为从地面翻起卧倒）、`enters from ground` 等模糊词汇。若需刚体平移，必须显式声明为 **平面 2D 刚体平移**（如 `slides horizontally from left edge in upright standing pose, 2D rigid translation, no body bending or crawling`）。
+
+8. **提示词视觉命题表达对齐校验规程 (Prompt Semantic Alignment Protocol)**：
+    - **分镜意图完全覆写与表达**：编导在撰写每个分镜的 `first_frame_prompt` 与 `last_frame_prompt` 时，必须核查提示词的 `Primary request` 与 `Delta changes` **是否 100% 精准承载并描述了该分镜的视觉命题 (`visual_proposition`)、核心物件 (`key_objects`) 以及科学寓意 (`metaphor_meaning`)**。
+    - **严禁遗漏与偏离**：若提示词遗漏了分镜核心要表达的视觉元件（如受体高亮框、红光穿透网格等），或画面描绘方向与台词寓意脱节，在 Phase 1 自检时必须判定为不合格，强制重新完善 Prompt 直至能够精准表意。
 
 ---
 
@@ -159,8 +164,8 @@ Agent 遵循以下严格顺序确定当前项目的视觉与运动风格规范�
       "keyframe_prompts": {
         "first_frame_prompt": "Use case: educational explainer animation. Asset type: content-rich initial keyframe...",
         "first_frame_prompt_zh": "Vox解说风格纸拼贴初始关键帧：黑白半调人物仰望，太阳开始萌发多色彩虹光束...",
-        "image_prompt": "Use case: educational explainer animation. Asset type: final completed keyframe...",
-        "image_prompt_zh": "Vox解说风格纸拼贴完成态关键帧：彩虹光束完整延伸穿入大气线网格..."
+        "last_frame_prompt": "Use case: educational explainer animation. Asset type: final completed keyframe...",
+        "last_frame_prompt_zh": "Vox解说风格纸拼贴完成态关键帧：彩虹光束完整延伸穿入大气线网格..."
       },
       "motion_plan": {
         "motion_prompt": "12fps stop-motion assembly. Beat 1 (0-2s): Atmosphere grid enters; Beat 2 (2-4.32s): Blue particles scatter on collision...",
@@ -200,8 +205,8 @@ Agent 遵循以下严格顺序确定当前项目的视觉与运动风格规范�
       "keyframe_prompts": {
         "first_frame_prompt": "Use case: educational explainer animation. Asset type: initial keyframe for continuous shot #2. Inherit exact background scene elements, character appearance, object scale, color palette and camera framing from Shot #1 end frame (ImagePaths[0]); keep all static shared elements 100% identical and frozen...",
         "first_frame_prompt_zh": "Vox解说风格初始关键帧（分镜2）：继承分镜1尾帧的大气网格与蓝光粒子底纹，特写镜头聚焦单个微粒...",
-        "image_prompt": "Use case: educational explainer animation. Asset type: final completed keyframe...",
-        "image_prompt_zh": "Vox解说风格完成态关键帧（分镜2）：微粒四周散射出高亮蓝光折射环..."
+        "last_frame_prompt": "Use case: educational explainer animation. Asset type: final completed keyframe...",
+        "last_frame_prompt_zh": "Vox解说风格完成态关键帧（分镜2）：微粒四周散射出高亮蓝光折射环..."
       },
       "motion_plan": {
         "motion_prompt": "12fps stop-motion zoom-in assembly. Beat 1 (0-2s): Zoom in on single particle; Beat 2 (2-5.28s): Rays shatter into ambient blue glow...",

@@ -87,16 +87,15 @@ Constraints: [本条隐喻必须一眼看懂的关系说明].
 Avoid: no AI gibberish text, no random unreadable letters, no random pseudo-symbols, no fullscreen title boxes, no logos, no watermark, no UI, no subtitles, no glossy 3D, no photoreal environment, no clutter.
 ```
 
-### 锚点对齐与图生图参考继承 (Anchor Conditioning & Image-to-Image Protocol)
-- **尾帧基准锚点 (Last Frame Prompt Anchor)**：
-  在 `image_prompt` (尾帧) 中，必须包含参考首帧锚点的指令：
-  `Reference Image Conditioning: Always pass first_frame_file via ImagePaths=[first_frame_path] to lock shared visual elements. Inherit exact background scene elements, character appearance, object scale, dot/grid density, and camera framing from reference image ImagePaths[0]. Keep all static shared background elements 100% identical and frozen.`
-- **连续分镜基准锚点 (Continuous Shot Prompt Anchor)**：
-  在分镜 N 的 `first_frame_prompt` (首帧) 中，若标记继承分镜 N-1 尾帧，必须包含：
-  `Inherit exact background scene elements, character appearance, object scale, color palette and camera framing from Shot #{N-1} end frame (reference image ImagePaths[0]); keep all static shared elements 100% identical and frozen.`
+### 锚点对齐与图生图增量提示词法则 (Img2Img Delta Prompting Protocol)
+- **图生图增量原则 (Delta-Only Principle)**：
+  在渲染图生图关键帧（如 `last_frame_prompt` 尾帧参考首帧，或连续分镜首帧参考上一分镜尾帧）时，**严禁在 Prompt 中重复大段描绘参考图中已存在的全量背景、配色与共有元素**。
+- **结构化增量 Prompt 写法**：
+  1. 头部锁死静态元素：`Reference Image Conditioning: Inherit exact background scene elements, character appearance, object scale, and camera framing from reference image ImagePaths[0]; keep all static shared elements 100% frozen.`
+  2. 身部仅精准描述物理增量与位移：`Delta changes: Move [Object A] from [initial position] to [target position], drop in [Object B] at [target position], and update [Object C] to state [state 2].`
 
 ### 双语对译与连续继承契约 (Dual Language & Continuity Protocol)
-- **双语全量对译硬绑定**：`storyboard.json` 中所有英文提示词必须附带对应的 `*_zh` 中文对译字段（如 `first_frame_prompt_zh`, `image_prompt_zh`, `motion_prompt_zh`），专供人类审计与审阅。**中文对译必须保留英文 Prompt 的全部内容与段落结构细节**（包含画幅、背景 HEX、组件列表、继承锚点、负向排除等），严禁缩简为一句话总结。
+- **双语全量对译硬绑定**：`storyboard.json` 中所有英文提示词必须附带对应的 `*_zh` 中文对译字段（如 `first_frame_prompt_zh`, `last_frame_prompt_zh`, `motion_prompt_zh`），专供人类审计与审阅。**中文对译必须保留英文 Prompt 的全部内容与段落结构细节**（包含画幅、背景 HEX、组件列表、继承锚点、负向排除等），严禁缩简为一句话总结。
 - **连续分镜继承（Continuous Shot Continuity）**：当分镜 N 承接分镜 N-1 时，标记 `"refer_previous_end_frame": true` 与 `"reference_shot_id": N-1`，保持主体形象、空间关系与色彩基调前后贯通。
 
 ---

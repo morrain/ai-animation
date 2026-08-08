@@ -97,15 +97,17 @@ def generate_shot_video(project_dir, shot_id=1, provider_config=None):
         half_dur = max(1.0, duration_sec / 2.0)
         offset = max(0.5, half_dur - 0.5)
         os.makedirs(os.path.dirname(os.path.abspath(out_mp4_path)), exist_ok=True)
+        import subprocess
         ff_cmd = [
             ffmpeg_bin, "-y",
             "-loop", "1", "-t", str(half_dur), "-i", first_frame_path,
             "-loop", "1", "-t", str(half_dur), "-i", last_frame_path,
-            "-filter_complex", f"[0:v][1:v]xfade=transition=fade:duration=0.5:offset={offset:.2f},fps=12,format=yuv420p",
+            "-filter_complex", f"[0:v]fade=t=out:st={offset:.2f}:d=0.5[v0];[1:v]fade=t=in:st=0:d=0.5[v1];[v0][v1]concat=n=2:v=1:a=0,fps=12,format=yuv420p",
             "-c:v", "libx264", "-r", "12",
             out_mp4_path
         ]
-        ret = os.system(" ".join(ff_cmd) + " >/dev/null 2>&1")
+        res = subprocess.run(ff_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        ret = res.returncode
         if ret == 0 and os.path.exists(out_mp4_path) and os.path.getsize(out_mp4_path) > 0:
             print(f"✨ [FFmpeg Fallback]: 镜头 #{shot_id} 本地 12fps 定格缓动动画合成成功: {out_mp4_path}")
             success = True

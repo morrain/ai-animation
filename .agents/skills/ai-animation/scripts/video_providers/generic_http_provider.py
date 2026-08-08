@@ -181,6 +181,16 @@ class GenericHttpProvider(BaseVideoProvider):
                 try:
                     with urllib.request.urlopen(q_req, timeout=30) as q_resp:
                         q_res = json.loads(q_resp.read().decode("utf-8"))
+                except urllib.error.HTTPError as e:
+                    err_text = ""
+                    try:
+                        err_text = e.read().decode("utf-8")
+                    except Exception:
+                        pass
+                    print(f"  ❌ [Attempt {attempt+1}] 轮询接口返回 HTTP 异常 ({e.code}): {err_text}", flush=True)
+                    if e.code == 400 or "error" in err_text.lower() or "policy" in err_text.lower():
+                        return False
+                    continue
                 except Exception as e:
                     print(f"  [Attempt {attempt+1}] 轮询查询异常: {e}，继续等待...", flush=True)
                     continue

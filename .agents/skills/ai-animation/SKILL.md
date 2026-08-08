@@ -68,10 +68,11 @@ Skill 默认开启 **SubAgent 自动化审查 + 人工门控机制**：
 
 1. **编导方案门控 (Director Gate)**：Phase 1 编导方案生成后暂停，**采用精简聚焦格式呈报**核心信息（全局重点：核心观点、叙事逻辑；分镜聚焦：口播台词、3–8 个核心物件 `key_objects`、核心动作动词 `action_verbs`、物件动作与逻辑映射说明 `object_actions`、整体分镜动画效果与运动轨迹说明 `motion_description`），隐藏冗长 Prompt 等底层细节，由用户审核确认。
 2. **静帧样板组 SubAgent 盲审与门控 (Keyframe Gate)**：
-   - 严禁调用内置 `generate_image` Tool 工具，所有生图任务必须通过 `run_command` 执行脚本 `python3 .agents/skills/ai-animation/scripts/generate_image.py <project_dir> [--shot_id N] [--all]`。
+   - 严禁调用内置 `generate_image` Tool 工具，所有生图任务必须通过 `run_command` 执行脚本 `python3 .agents/skills/ai-animation/scripts/generate_image.py --prompt "..." --output "..."` 逐帧渲染单图。
    - 严禁一次性全量批量调用脚本生成全部分镜！在 Phase 2 开始时，**必须优先生成 Shot #1 的首尾双帧样板图 (`shot_01_first.png` 与 `shot_01_last.png`)**（若风格为单帧 Hero 模式则生成主帧），要求**首尾两帧同时参与审核与呈报**。
-   - **SubAgent 盲审**：调起 SubAgent 严格依照 `references/validation-rules.md` 审核 Shot #1 首尾双帧的 8 项静态视觉指标（包含物理落地、隐喻清晰度、无变形假字、首尾锚点对齐及动作方案契合度等）。
-   - **重点突出汇报与人工确认**：将 Shot #1 首尾样板图（首帧与尾帧对比）呈报给用户，并在汇报中**重点突出展现两帧之间的动画动作与过渡逻辑、视觉隐喻与科学含义、3–8 个核心物件的切入状态与位置变迁**。呈报后**停止后续 Tool Call 等待确认**。用户确认风格与画质满意后，方可批量生成 Shot #2~N 的全量静帧及首末帧控制图。
+   - **SubAgent 静态单帧盲审**：调起 SubAgent 严格依照 `references/validation-rules.md` 仅对刚生成的单帧进行精准盲审。文生图校验物理落地与视觉隐喻；图生图**重点与参考图比对核验是否仅改变了增量内容、有无丢掉共有元素（少东西）或产生幻觉杂物（多东西）**。
+   - **重点突出汇报与人工确认**：将 Shot #1 首尾样板图（首帧与尾帧对比）呈报给用户，并在汇报中**重点突出展现两帧之间的动画动作与过渡逻辑、视觉隐喻与科学含义、3–8 个核心物件的切入状态与位置变迁**。呈报后**停止后续 Tool Call 等待确认**。
+   - **后续分镜逐一生成与单帧盲审**：用户确认风格与画质满意（完成人工审批）后，Agent 开始**逐一生成其它分镜（Shot #2 ~ Shot #N）的静态帧，每生成一个分镜的静态帧，即刻触发 SubAgent 对当前生成图片的盲审流程**，审核通过后再生成下一个分镜。
 3. **动画样片 SubAgent 动态审核与门控 (Motion Pilot Gate)**：
    - 必须通过 AI 图生视频大模型（Image-to-Video Model）输入首末帧与 `motion_prompt` 渲染真实视觉元素运动视频（详见 `references/03-motion-spec.md`）。
    - 优先渲染首个单镜头（Shot #1）的动态无声视频样片。
@@ -131,7 +132,7 @@ Skill 默认开启 **SubAgent 自动化审查 + 人工门控机制**：
 
 1. **[编导阶段 (Director)](references/01-director-spec.md)**
    - **输入**：用户原始资料/想法/主题。
-   - **核心约束**：**一镜只讲一个意思（一镜头推导一因果）**；**单镜单动作原则 (Single Action Per Shot)**，复合动作必须拆分为独立子镜头，避免 AI 图生视频融化跳闪；画面无字幕亦可看懂；Prompt 必须按选定 Style 的 `prompt_template.md` 强制落地 **5 段式结构**（包含 HEX 色号、画幅锁、字幕留白边界、材质白描边与负向排除）。
+   - **核心约束**：**一镜只讲一个意思（一镜头推导一因果）**；**单镜单动作原则 (Single Action Per Shot)**，复合动作必须拆分为独立子镜头，避免 AI 图生视频融化跳闪；**图生图增量提示词法则 (Img2Img Delta Prompting Protocol)**，图生图提示词仅描述继承锚点与具体物件的挪动/物理增量改变，严禁重复大段全量背景以防生图偏差；画面无字幕亦可看懂；Prompt 必须按选定 Style 的 `prompt_template.md` 强制落地 **5 段式结构**（包含 HEX 色号、画幅锁、字幕留白边界、材质白描边与负向排除）。
    - **输出**：`<topic_slug>/01-director/storyboard.json`（包含核心观点、叙事逻辑、分镜台词、中英双语提示词、视觉隐喻与转场计划）。
 
 2. **[视觉阶段 (Visuals)](references/02-visual-spec.md)**
